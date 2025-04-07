@@ -1,11 +1,17 @@
 import { MySqlDriver, defineConfig } from "@mikro-orm/mysql"
-import { Client } from "./client/entities/client.entity"
+import { Client } from "./module/client/entities/client.entity"
 import { Migrator } from "@mikro-orm/migrations"
+import { Host } from "./module/host/entities/host.entity"
+import { Reservation } from "./module/reservation/entities/reservation.entity"
 
 export default defineConfig({
   // entities: ['./dist/entities'],
   // entitiesTs: ['./src/entities'],
-  entities: [Client],
+  entities: [
+    Client,
+    Host,
+    Reservation
+  ],
   discovery: {
     warnWhenNoEntities: false
   },

@@ -19,21 +19,20 @@ export class ClientService {
     return await this.clientRepository.findAll();
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const client = await this.clientRepository.findOne({ id });
     if(!client) return 'Nenhum cliente foi encontrado';
-
     return client;
   }
 
-  async update(id: string, updateClientDto: UpdateClientDto) {
+  async update(id: number, updateClientDto: UpdateClientDto) {
     const client = await this.clientRepository.findOne({ id });
     if(!client) return 'Nenhum cliente foi encontrado';
 
     return await this.clientRepository.nativeUpdate(client, updateClientDto);
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const client = await this.clientRepository.findOne({ id });
     if(!client) return 'Nenhum cliente foi encontrado';
 

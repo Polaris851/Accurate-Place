@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UsePipes, ValidationPipe, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -8,7 +8,6 @@ export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe())
   async create(@Body() createClientDto: CreateClientDto) {
     return await this.clientService.create(createClientDto);
   }
@@ -19,18 +18,17 @@ export class ClientController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
+  async findOne(@Param('id') id: number) {
     return await this.clientService.findOne(id);
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe())
-  async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() updateClientDto: UpdateClientDto) {
+  async update(@Param('id') id: number, @Body() updateClientDto: UpdateClientDto) {
     return await this.clientService.update(id, updateClientDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id', new ParseUUIDPipe()) id: string) {
+  async remove(@Param('id') id: number) {
     return await this.clientService.remove(id);
   }
 }

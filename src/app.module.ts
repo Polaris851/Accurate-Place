@@ -2,17 +2,17 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { ClientModule } from './client/client.module';
-import { ReservationModule } from './reservation/reservation.module';
-import { LocationModule } from './location/location.module';
+import { ClientModule } from './module/client/client.module';
+import { ReservationModule } from './module/reservation/reservation.module';
 import config from "./mikro-orm.config";
+import { HostModule } from './module/host/host.module';
 
 @Module({
   imports: [
     MikroOrmModule.forRoot(config),
     ClientModule,
     ReservationModule,
-    LocationModule,
+    HostModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Min } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
 
-export class CreateLocationDto {
+export class CreateHostDto {
   @IsNotEmpty({ message: 'O nome é obrigatório.' })
   @IsString({ message: 'O nome deve ser uma string.' })
   name: string;
