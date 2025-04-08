@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -21,20 +21,20 @@ export class ClientService {
 
   async findOne(id: number) {
     const client = await this.clientRepository.findOne({ id });
-    if(!client) return 'Nenhum cliente foi encontrado';
+    if(!client)  throw new NotFoundException('Cliente não encontrado');
     return client;
   }
 
   async update(id: number, updateClientDto: UpdateClientDto) {
     const client = await this.clientRepository.findOne({ id });
-    if(!client) return 'Nenhum cliente foi encontrado';
+    if(!client)  throw new NotFoundException('Cliente não encontrado');
 
     return await this.clientRepository.nativeUpdate(client, updateClientDto);
   }
 
   async remove(id: number) {
     const client = await this.clientRepository.findOne({ id });
-    if(!client) return 'Nenhum cliente foi encontrado';
+    if(!client)  throw new NotFoundException('Cliente não encontrado');
 
     await this.clientRepository.nativeDelete({ id });
     return `O cliente ${client.name} foi removido`;

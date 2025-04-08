@@ -1,13 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateHostDto } from './dto/create-host.dto';
 import { UpdateHostDto } from './dto/update-host.dto';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/mysql';
 import { Host } from './entities/host.entity';
+import { Reservation } from '../reservation/entities/reservation.entity';
 
 @Injectable()
 export class HostService {
-  constructor(@InjectRepository(Host) private readonly hostRepository: EntityRepository<Host>) {}
+  constructor(
+    @InjectRepository(Host) private readonly hostRepository: EntityRepository<Host>,
+    @InjectRepository(Reservation) private readonly reservationRepository: EntityRepository<Reservation>
+) {}
 
   async create(createHostDto: CreateHostDto) {
     const host = this.hostRepository.create(createHostDto);
@@ -21,22 +25,46 @@ export class HostService {
 
   async findOne(id: number) {
     const host = await this.hostRepository.findOne({ id });
-    if(!host) return 'Nenhuma locação foi encontrada';
+    if (!host) throw new NotFoundException('Locação não encontrada');
     return host;
   }
 
   async update(id: number, updateHostDto: UpdateHostDto) {
     const host = await this.hostRepository.findOne({ id });
-    if(!host) return 'Nenhuma locação foi encontrada';
+    if (!host) throw new NotFoundException('Locação não encontrada');
     
     return await this.hostRepository.nativeUpdate(host, updateHostDto);
   }
 
   async remove(id: number) {
     const host = await this.hostRepository.findOne({ id });
-    if(!host) return 'Nenhuma locação foi encontrada';
+    if (!host) throw new NotFoundException('Locação não encontrada');
 
     await this.hostRepository.nativeDelete({ id });
     return `A locação ${host.name} foi removido`;
+  }
+
+  async getAvailableHosts(start_date: string, end_date: string) {
+    const start = new Date(start_date);
+    const end = new Date(end_date);
+
+    if (start >= end) {
+      throw new BadRequestException('A data inicial deve ser anterior à data final');
+    }
+    
+    const hostsBusy = await this.reservationRepository.find({
+      start_date: { $lt: end },
+      end_date: { $gt: start }
+    })
+
+    const hostsBusyIds = hostsBusy.map(h => h.host_id);
+
+    if (hostsBusyIds.length === 0) {
+      return this.hostRepository.findAll();
+    }
+
+    return this.hostRepository.find({
+      id: { $nin: hostsBusyIds }
+    });
   }
 }
