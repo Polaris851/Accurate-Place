@@ -11,6 +11,8 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "migration:create": "npx mikro-orm migration:create --blank -n",
+    "migrate:down": "npx mikro-orm migration:down",
+    "migrate": "npx mikro-orm migration:up",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
