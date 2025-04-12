@@ -1,7 +1,9 @@
+import { HostsPage } from "./pages/hosts/page";
 
 function App() {
+
   return (
-    <div></div>
+    <HostsPage/>
   )
 }
 
