@@ -1,22 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../../components/button";
 import { CardHost } from "./components/cardHost";
-import { api } from "../../lib/axios";
 import { Modal } from "../../components/modal";
-
-interface Host {
-    id: number,
-    name: string,
-    type: string,
-    description: string | null,
-    hourly_price: number,
-    min_time: number,
-    max_time: number
-  }
+import { useHosts } from "./api/get-hosts";
 
 export function HostsPage() {
-    const [hosts, setHosts] = useState<Host[]>([]);
-    const [isNewHostModalOpen, setIsNewHostModalOpen] = useState(true);
+    const { hosts, isLoading } = useHosts();
+
+    const [isNewHostModalOpen, setIsNewHostModalOpen] = useState(false);
 
     function openNewHostModal() {
         setIsNewHostModalOpen(true);
@@ -26,10 +17,10 @@ export function HostsPage() {
         setIsNewHostModalOpen(false);
     }
 
-    useEffect(() => {
-        api.get('/host').then(response => setHosts(response.data))
-    }, []);
-    
+    if (isLoading) {
+        return <div>loading...</div>
+    }
+
     return (
         <div className="h-screen flex justify-center">
             <div className="max-w-3xl px-6">
@@ -41,7 +32,7 @@ export function HostsPage() {
                 </div>
                 <div>
                     {
-                        hosts.map(host =>
+                        hosts?.map(host =>
                             <CardHost
                                 key={host.id}
                                 name={host.name}
