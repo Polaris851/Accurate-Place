@@ -1,7 +1,9 @@
+import { NavLink } from "react-router"
 import { Button } from "../../../components/button"
 
 
 interface HostProps {
+    hostId: number;
     name: string,
     type: string,
     description: string | null,
@@ -10,7 +12,7 @@ interface HostProps {
     max_time: number
 }
 
-export function CardHost({ name, type, description, hourly_price, min_time, max_time }: HostProps) {
+export function CardHost({ hostId, name, type, description, hourly_price, min_time, max_time }: HostProps) { 
     return (
         <div className="bg-gray-800 p-4 my-2">
             <div className="text-center">
@@ -26,9 +28,11 @@ export function CardHost({ name, type, description, hourly_price, min_time, max_
                     <p>Temp. Minimo: {min_time} min</p> 
                     <p>Temp. Maximo: {max_time} min</p>
 
-                    <Button type="button">
-                        Reservar
-                    </Button>
+                    <NavLink to={`/host/${hostId}`}>
+                        <Button type="button">
+                            Reservar
+                        </Button>
+                    </NavLink>
                 </div>
             </div>
         </div>
