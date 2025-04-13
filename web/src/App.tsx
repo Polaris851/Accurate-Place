@@ -1,10 +1,8 @@
-import { HostsPage } from "./pages/hosts/page";
+import { RouteManager } from "./routes";
 
 function App() {
 
-  return (
-    <HostsPage/>
-  )
+  return <RouteManager />
 }
 
 export default App
