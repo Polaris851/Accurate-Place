@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "../../components/button";
 import { CardHost } from "./components/cardHost";
 import { Modal } from "../../components/modal";
 import { useHosts } from "./api/get-hosts";
+import { Input } from "../../components/input";
+import { api } from "../../lib/axios";
 
 export function HostsPage() {
     const { hosts, isLoading } = useHosts();
@@ -15,6 +17,23 @@ export function HostsPage() {
 
     function closeNewHostModal() {
         setIsNewHostModalOpen(false);
+    }
+
+    function createNewHost(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        const data = {
+            name: formData.get('name'),
+            type: formData.get('type'),
+            description: formData.get('description'),
+            hourly_price: +(formData.get('hourly_price') ?? 0),
+            min_time: +(formData.get('min_time') ?? 0),
+            max_time: +(formData.get('max_time') ?? 0),
+        };
+
+        api.post("/host", data).then(response => console.log(response.data));
     }
 
     if (isLoading) {
@@ -47,18 +66,42 @@ export function HostsPage() {
                 </div>
             </div>
             <Modal title="Nova Locação" open={isNewHostModalOpen} onClose={closeNewHostModal}>
-                <form className="space-y-3">
-                    <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
-                        <input type="text" name="name" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" placeholder="Nome da Locação" />
-                    </div>
+                <form className="space-y-3" onSubmit={createNewHost}>
+                    <Input
+                        name={"name"}
+                        placeholder={"Nome da Locação"}
+                        type={"text"}
+                    />
 
-                    <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
-                        <input type="email" name="email" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" placeholder="Tipo de Locação" />
-                    </div>
+                    <Input
+                        name={"type"}
+                        placeholder={"Tipo de Locação"}
+                        type={"text"}
+                    />
 
-                    <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
-                        <input type="text" name="description" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" placeholder="Descrição da Locação" />
-                    </div>
+                    <Input
+                        name={"description"}
+                        placeholder={"Descrição da Locação"}
+                        type={"text"}
+                    />
+
+                    <Input
+                        name={"hourly_price"}
+                        placeholder={"Valor por hora"}
+                        type={"text"}
+                    />
+
+                    <Input
+                        name={"min_time"}
+                        placeholder={"Tempo Minimo"}
+                        type={"number"}
+                    />
+
+                    <Input
+                        name={"max_time"}
+                        placeholder={"Tempo Máximo"}
+                        type={"number"}
+                    />
 
                     <Button type="submit" size="full">
                         Confirmar
