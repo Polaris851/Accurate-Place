@@ -40,7 +40,7 @@ export function AddHostContainer() {
                     <Input
                         {...register("name", { required: true })}
                         placeholder="Nome da Locação"
-                        type={"text"}
+                        type="text"
                     />
                     {errors.name && <span>O campo é obrigatório</span>}
 
@@ -48,35 +48,35 @@ export function AddHostContainer() {
                     <Input
                         {...register("type", { required: true })}
                         placeholder={"Tipo de Locação"}
-                        type={"text"}
+                        type="text"
                     />
                     {errors.type && <span>O campo é obrigatório</span>}
 
 
                     <Input
                         {...register("description", { required: true })}
-                        placeholder={"Descrição da Locação"}
+                        placeholder="Descrição da Locação"
                     />
 
                     <Input
                         {...register("hourly_price", { required: true, valueAsNumber: true })}
-                        placeholder={"Valor por hora"}
-                        type={"text"}
+                        placeholder="Valor por hora"
+                        type="text"
                     />
                     {errors.hourly_price && <span>O campo é obrigatório</span>}
 
                     <Input
                         {...register("min_time", { required: true, valueAsNumber: true })}
-                        placeholder={"Tempo Minimo"}
-                        type={"number"}
+                        placeholder="Tempo Minimo"
+                        type="number"
                     />
                     {errors.min_time && <span>O campo é obrigatório</span>}
 
 
                     <Input
                         {...register("max_time", { required: true, valueAsNumber: true })}
-                        placeholder={"Tempo Máximo"}
-                        type={"number"}
+                        placeholder="Tempo Máximo"
+                        type="number"
                     />
                     {errors.max_time && <span>O campo é obrigatório</span>}
 

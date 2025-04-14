@@ -4,7 +4,7 @@ export function UserAvatar() {
             <img
                 src={`https://robohash.org/leticia`}
                 width={35}
-                className={"rounded-full bg-zinc-100"}
+                className="rounded-full bg-zinc-100"
             />
         </div>
     )

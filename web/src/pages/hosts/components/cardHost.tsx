@@ -4,31 +4,19 @@ interface HostProps {
     hostId: number;
     name: string,
     type: string,
-    description: string | null,
     hourly_price: number,
-    min_time: number,
-    max_time: number
 }
 
-export function CardHost({ hostId, name, type, description, hourly_price, min_time, max_time }: HostProps) { 
+export function CardHost({ hostId, name, type, hourly_price }: HostProps) { 
     return (
-        <NavLink to={`/host/${hostId}`}>
-            <div className="bg-gray-800 p-4 my-2">
-                <div className="text-center">
-                    <h2>{name}</h2>
-                </div>
-                <div className="flex flex-row gap-4">
-                    <div className="w-[440px]">
-                        <h3>{type}</h3>
-                        <p>{description}</p>
-                    </div>
-                    <div>
-                        <p>R$ {hourly_price}</p>
-                        <p>Temp. Minimo: {min_time} min</p> 
-                        <p>Temp. Maximo: {max_time} min</p>
-                    </div>
-                </div>
-            </div>
+        <NavLink 
+         className="rounded-md bg-zinc-800 p-5 flex flex-col gap-3 overflow-hidden hover:ring-2 hover:ring-fuchsia-950" 
+         to={`/host/${hostId}`} >
+            <h1 className="text-zinc-200 text-lg font-semibold text-center">{name}</h1>
+            <p className="text-base font-medium text-zinc-400">
+                {type}
+                <span>R$ {hourly_price}</span>
+            </p>
         </NavLink>
     )
 }

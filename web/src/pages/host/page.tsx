@@ -16,14 +16,14 @@ export function HostPage() {
     }
 
     return (
-        <div className={"px-10 py-2"}>
-            <div className={"flex justify-between items-center"}>
-                <h1 className={"text-2xl font-semibold"}>{host.name}</h1>
+        <div className="px-10 py-2">
+            <div className="flex justify-between items-center">
+                <h1 className="text-2xl font-semibold">{host.name}</h1>
                 <div>compartilhar</div>
             </div>
 
-            <div className={"flex justify-between"}>
-                <div className={"flex-1/2"}>
+            <div className="flex justify-between">
+                <div className="flex-1/2">
                     <div>{host.type}</div>
                     <div>total de reservas já feitas!</div>
                     <div>{host.description}</div>

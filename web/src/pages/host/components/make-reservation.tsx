@@ -38,7 +38,7 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
     }
 
     return (
-        <div className={"flex flex-col gap-2"}>
+        <div className="flex flex-col gap-2">
             <DayPicker
                 mode={"range"}
                 disabled={occupiedDates.map(date => new Date(date))}
@@ -51,11 +51,25 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
                     console.log(foo.to?.getDate());
                     setRange(foo);
                 }}
+                modifiersStyles={{
+                    selected: {
+                        backgroundColor: 'red',
+                        color: 'white',
+                      },
+                      range_middle: {
+                        backgroundColor: 'red',
+                        color: 'white',
+                      },
+                      today: {
+                        backgroundColor: '#0000ff',
+                        color: 'white',
+                      },
+                }}
             />
 
             <CheckInOut from={range?.from} to={range?.to} />
 
-            <Button size={"full"} variant={"secondary"} onClick={makeReservation}>
+            <Button size="full" variant="secondary" onClick={makeReservation}>
                 Reservar
             </Button>
         </div>

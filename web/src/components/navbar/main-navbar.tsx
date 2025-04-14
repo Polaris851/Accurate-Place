@@ -1,10 +1,12 @@
+import { NavLink } from "react-router";
 import { UserAvatar } from "./user-avatar";
 
 export function MainNavBar() {
     return (
-        <nav className={"bg-red-400 flex justify-between items-center px-4 py-1"}>
-            <img src={"/navbar-accurate-logo.svg"}/>
-            <input placeholder={"pesquisa fuzzy aqui"}/>
+        <nav className="bg-zinc-900 flex justify-between items-center px-10 py-1.5">
+            <NavLink to="/">
+                <img src="/navbar-accurate-logo.svg"/>
+            </NavLink>
             <UserAvatar />
         </nav>
     )
