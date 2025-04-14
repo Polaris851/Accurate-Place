@@ -1,27 +1,35 @@
 import { useParams } from "react-router"
+import { useHost } from "./api/get-host";
+import { MakeReservation } from "./components/make-reservation";
 
 export function HostPage() {
     const params = useParams();
 
-    console.log(params);
+    const { host, isLoading } = useHost(Number(params?.hostId));
+    
+    if (isLoading) {
+        return <div>loading component</div>
+    }
+
+    if (host === undefined) {
+        return <div>host não encontrado</div>
+    }
 
     return (
-        <div>
-            <div>
-                <h1>hjost title</h1>
+        <div className={"px-10 py-2"}>
+            <div className={"flex justify-between items-center"}>
+                <h1 className={"text-2xl font-semibold"}>{host.name}</h1>
                 <div>compartilhar</div>
             </div>
 
-            <div>
-                <div>
-                    <div>tipo</div>
+            <div className={"flex justify-between"}>
+                <div className={"flex-1/2"}>
+                    <div>{host.type}</div>
                     <div>total de reservas já feitas!</div>
-                    <div>descricao</div>
+                    <div>{host.description}</div>
                 </div>
                 
-                <div>
-                    componente com calendário e dados para efetivar a reserva
-                </div>
+                <MakeReservation />
             </div>
         </div>
     )
