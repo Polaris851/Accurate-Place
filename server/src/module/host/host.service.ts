@@ -5,6 +5,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository } from '@mikro-orm/mysql';
 import { Host } from './entities/host.entity';
 import { Reservation } from '../reservation/entities/reservation.entity';
+import { HostWithOccupiedDatesDto } from './dto/hosts-with-occupied-dates.dto';
 
 @Injectable()
 export class HostService {
@@ -26,7 +27,31 @@ export class HostService {
   async findOne(id: number) {
     const host = await this.hostRepository.findOne({ id });
     if (!host) throw new NotFoundException('Locação não encontrada');
-    return host;
+
+    const reservations = await this.reservationRepository.find({
+      host: { id: id }
+    });
+  
+    const occupiedDates = new Set<string>();
+  
+    for (const reservation of reservations) {
+      const start = this.normalizeDate(new Date(reservation.start_date));
+      const end = this.normalizeDate(new Date(reservation.end_date));
+  
+      for (
+        let date = new Date(start);
+        date <= end;
+        date.setDate(date.getDate() + 1)
+      ) {
+        const formatted = date.toISOString().split('T')[0];
+        occupiedDates.add(formatted);
+      }
+    }
+  
+    return {
+      ...host,
+      occupied_dates: Array.from(occupiedDates).sort()
+    } as HostWithOccupiedDatesDto;
   }
 
   async update(id: number, updateHostDto: UpdateHostDto) {
@@ -66,5 +91,9 @@ export class HostService {
     return this.hostRepository.find({
       id: { $nin: hostsBusyIds }
     });
+  }
+
+  normalizeDate(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 }

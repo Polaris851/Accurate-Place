@@ -50,7 +50,17 @@ export class ReservationService {
       throw new ConflictException('Cliente já possui uma reserva nesse período');
     }
 
-    const reservation = this.reservationRepository.create(createReservationDto);
+    const startDate = new Date(createReservationDto.start_date);
+    const endDate = new Date(createReservationDto.end_date);
+    const days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+
+    const total = host.hourly_price * 24 * days;
+
+    const reservation = this.reservationRepository.create({
+      ...createReservationDto,
+      total_price: total, 
+    });
+    
     await this.reservationRepository.insert(reservation);
     return reservation;
   }

@@ -6,7 +6,11 @@ import toast from "react-hot-toast";
 import { api } from "../../../lib/axios";
 import { useParams } from "react-router";
 
-export function MakeReservation() {
+interface MakeReservationProps {
+    occupiedDates: string[]
+}
+
+export function MakeReservation({ occupiedDates }: MakeReservationProps) {
     const { hostId } = useParams();
 
     const [range, setRange] = useState<DateRange | undefined>();
@@ -17,11 +21,10 @@ export function MakeReservation() {
         }
 
         toast.promise(() => api.post("/reservation", {
-            client_id: 1,
+            client_id: 7,
             host_id: +hostId,
             start_date: range?.from,
             end_date: range?.to,
-            total_price: 1,
             status: "foo"
         }), {
             loading: "Criando reserva!",
@@ -38,7 +41,7 @@ export function MakeReservation() {
         <div className={"flex flex-col gap-2"}>
             <DayPicker
                 mode={"range"}
-                disabled={[new Date(2025, 3, 20), new Date(2025, 3, 21), new Date(2025, 3, 22)]}
+                disabled={occupiedDates.map(date => new Date(date))}
                 selected={range}
                 onSelect={(foo) => {
                     if (foo === undefined) {

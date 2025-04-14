@@ -29,7 +29,7 @@ export function HostPage() {
                     <div>{host.description}</div>
                 </div>
                 
-                <MakeReservation />
+                <MakeReservation occupiedDates={host.occupied_dates}  />
             </div>
         </div>
     )

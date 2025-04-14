@@ -13,11 +13,6 @@ export class CreateReservationDto {
   @IsNotEmpty({ message: 'A data final é obrigatório.' })
   end_date: Date;
 
-  @IsNotEmpty({ message: 'O valor final é obrigatório.' })
-  @IsNumber({}, { message: 'O valor final deve ser numérico.' })
-  @IsPositive({ message: 'O valor final deve ser positivo.' })
-  total_price: number;
-
   @IsNotEmpty({ message: 'A situação é obrigatório.' })
   @IsString({ message: 'A situação deve ser uma string.' })
   status: string;

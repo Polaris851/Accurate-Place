@@ -9,7 +9,8 @@ export interface Host {
     description: string | null,
     hourly_price: number,
     min_time: number,
-    max_time: number
+    max_time: number,
+    occupied_dates: string[]
 }
 
 export function useHosts() {

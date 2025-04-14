@@ -2,7 +2,7 @@ export function UserAvatar() {
     return (
         <div>
             <img
-                src={`https://robohash.org/${Math.random()}`}
+                src={`https://robohash.org/leticia`}
                 width={35}
                 className={"rounded-full bg-zinc-100"}
             />
