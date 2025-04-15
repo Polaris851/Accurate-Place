@@ -37,19 +37,16 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
         })
     }
 
-    console.log(occupiedDates, new Date(occupiedDates?.[0]))
-
     if (!hostId) {
         return;
     }
 
     return (
-        <div className="flex flex-col gap-2 justify-center items-center">
-            <div>
+        <div className="flex flex-col justify-center items-center">
+            <div className="space-y-4 my-2">
                 <DayPicker
                     mode={"range"}
                     disabled={disabledRange}
-                    
                     selected={range}
                     onSelect={(foo) => {
                         if (foo === undefined) {
@@ -62,26 +59,25 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
                     modifiersStyles={{
                         selected: {
                             backgroundColor: 'transparant',
-                            color: 'white',
+                            color: '#f5f4f4',
                         },
                         range_middle: {
-                            backgroundColor: 'fuchsia',
-                            color: 'white',
+                            color: '#1b1718',
                         },
                         today: {
-                            backgroundColor: 'fuchsia',
-                            color: 'white',
+                            backgroundColor: '#8a0194',
+                            color: '#f5f4f4',
                         },
                     }}
                 />
                 <Button onClick={() => setRange(undefined)}>Limpar datas</Button>
+
+                <CheckInOut from={range?.from} to={range?.to} />
+
+                <Button size="full" variant="secondary" onClick={makeReservation}>
+                    Reservar
+                </Button>
             </div>
-
-            <CheckInOut from={range?.from} to={range?.to} />
-
-            <Button size="full" variant="secondary" onClick={makeReservation}>
-                Reservar
-            </Button>
         </div>
     )
 }

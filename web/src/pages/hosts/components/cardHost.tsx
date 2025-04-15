@@ -1,3 +1,4 @@
+import { Trash, FilePenLine  } from "lucide-react";
 import { NavLink } from "react-router"
 
 interface HostProps {
@@ -17,6 +18,11 @@ export function CardHost({ hostId, name, type, hourly_price }: HostProps) {
                 {type}
                 <span>R$ {hourly_price}</span>
             </p>
+
+            <div className="flex justify-end gap-3">
+              <FilePenLine  className="size-5 text-zinc-200" />
+              <Trash className="size-5 text-zinc-200" />
+            </div>
         </NavLink>
     )
 }

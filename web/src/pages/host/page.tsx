@@ -17,16 +17,16 @@ export function HostPage() {
 
     return (
         <div className="max-w-6xl mx-auto my-12 space-y-6 px-4">
-            <div className="flex md:flex-row flex-col justify-between items-center">
-                <h1 className="text-2xl font-semibold">{host.name}</h1>
-                <div>compartilhar</div>
-            </div>
+            <div className="flex md:flex-row flex-col justify-between mx-2">
 
-            <div className="flex md:flex-row flex-col justify-between">
-                <div className="flex-1/2">
-                    <div>{host.type}</div>
-                    <div>total de reservas já feitas!</div>
-                    <div>{host.description}</div>
+                <div className="my-4 flex flex-col items-center md:items-start">
+                    <div className="space-y-2">
+                        <h1 className="text-2xl font-semibold">{host.name}</h1>
+                        <p>{host.type}</p>
+                        {/* <p> 25 reservas já feitas!</p> */}
+                        <p>{host.description}</p>
+                    </div>
+                    
                 </div>
                 
                 <MakeReservation occupiedDates={host.occupied_dates}  />
