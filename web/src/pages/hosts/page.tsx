@@ -10,23 +10,25 @@ export function HostsPage() {
     }
 
     return (
-        <div className="max-w-6xl mx-auto my-12 space-y-6">
-            <div className="flex flex-row justify-between">
-                <h1 className="text-zinc-100 text-3xl font-semibold">Locações</h1>
-                <AddHostContainer />
-            </div>
-            <div className="grid grid-cols-3 gap-3 auto-rows-[130px]">
-                {
-                    hosts?.map(host =>
-                        <CardHost
-                            key={host.id}
-                            hostId={host.id}
-                            name={host.name}
-                            type={host.type}
-                            hourly_price={host.hourly_price}
-                        />
-                    )
-                }
+        <div className="bg-[url(/public/bg.png)] bg-no-repeat bg-center h-screen justify-between items-center">
+            <div className="max-w-6xl mx-auto my-12 space-y-6 px-4">
+                <div className="flex flex-row justify-between">
+                    <h1 className="text-zinc-100 text-3xl font-semibold">Locações</h1>
+                    <AddHostContainer />
+                </div>
+                <div className="grid md:grid-cols-3 grid-cols-1 gap-3 auto-rows-[130px]">
+                    {
+                        hosts?.map(host =>
+                            <CardHost
+                                key={host.id}
+                                hostId={host.id}
+                                name={host.name}
+                                type={host.type}
+                                hourly_price={host.hourly_price}
+                            />
+                        )
+                    }
+                </div>
             </div>
         </div>
     );

@@ -5,15 +5,19 @@ import { Button } from "../../../components/button";
 import toast from "react-hot-toast";
 import { api } from "../../../lib/axios";
 import { useParams } from "react-router";
+import { useDisabledDateRange } from "../hooks/use-disabled-date-range";
+import { Host } from "../../hosts/api/get-hosts";
 
 interface MakeReservationProps {
-    occupiedDates: string[]
+    occupiedDates: Host["occupied_dates"]
 }
 
 export function MakeReservation({ occupiedDates }: MakeReservationProps) {
     const { hostId } = useParams();
 
     const [range, setRange] = useState<DateRange | undefined>();
+
+    const disabledRange = useDisabledDateRange(range?.from, new Date(occupiedDates?.[0]));
 
     function makeReservation() {
         if (hostId === undefined) {
@@ -33,39 +37,45 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
         })
     }
 
+    console.log(occupiedDates, new Date(occupiedDates?.[0]))
+
     if (!hostId) {
         return;
     }
 
     return (
-        <div className="flex flex-col gap-2">
-            <DayPicker
-                mode={"range"}
-                disabled={occupiedDates.map(date => new Date(date))}
-                selected={range}
-                onSelect={(foo) => {
-                    if (foo === undefined) {
-                        return;
-                    }
+        <div className="flex flex-col gap-2 justify-center items-center">
+            <div>
+                <DayPicker
+                    mode={"range"}
+                    disabled={disabledRange}
                     
-                    console.log(foo.to?.getDate());
-                    setRange(foo);
-                }}
-                modifiersStyles={{
-                    selected: {
-                        backgroundColor: 'red',
-                        color: 'white',
-                      },
-                      range_middle: {
-                        backgroundColor: 'red',
-                        color: 'white',
-                      },
-                      today: {
-                        backgroundColor: '#0000ff',
-                        color: 'white',
-                      },
-                }}
-            />
+                    selected={range}
+                    onSelect={(foo) => {
+                        if (foo === undefined) {
+                            return;
+                        }
+                        
+                        console.log(foo.to?.getDate());
+                        setRange(foo);
+                    }}
+                    modifiersStyles={{
+                        selected: {
+                            backgroundColor: 'transparant',
+                            color: 'white',
+                        },
+                        range_middle: {
+                            backgroundColor: 'fuchsia',
+                            color: 'white',
+                        },
+                        today: {
+                            backgroundColor: 'fuchsia',
+                            color: 'white',
+                        },
+                    }}
+                />
+                <Button onClick={() => setRange(undefined)}>Limpar datas</Button>
+            </div>
 
             <CheckInOut from={range?.from} to={range?.to} />
 

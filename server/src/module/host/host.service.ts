@@ -32,7 +32,7 @@ export class HostService {
       host: { id: id }
     });
   
-    const occupiedDates = new Set<string>();
+    const occupiedDates = new Set<Date>();
   
     for (const reservation of reservations) {
       const start = this.normalizeDate(new Date(reservation.start_date));
@@ -44,7 +44,7 @@ export class HostService {
         date.setDate(date.getDate() + 1)
       ) {
         const formatted = date.toISOString().split('T')[0];
-        occupiedDates.add(formatted);
+        occupiedDates.add(date);
       }
     }
   
