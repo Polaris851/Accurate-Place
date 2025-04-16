@@ -5,6 +5,7 @@ import { Modal } from "../../../components/modal";
 import { FieldValues, useForm } from "react-hook-form";
 import { api } from "../../../lib/axios";
 import toast from "react-hot-toast";
+import { CircleCheck } from "lucide-react";
 
 export function AddHostContainer() {
     const [isNewHostModalOpen, setIsNewHostModalOpen] = useState(false);
@@ -72,7 +73,6 @@ export function AddHostContainer() {
                     />
                     {errors.min_time && <span>O campo é obrigatório</span>}
 
-
                     <Input
                         {...register("max_time", { required: true, valueAsNumber: true })}
                         placeholder="Tempo Máximo"
@@ -80,9 +80,8 @@ export function AddHostContainer() {
                     />
                     {errors.max_time && <span>O campo é obrigatório</span>}
 
-
-
                     <Button type="submit" size="full">
+                        <CircleCheck className="size-5 text-fuchsia-300"/>
                         Confirmar
                     </Button>
                 </form>

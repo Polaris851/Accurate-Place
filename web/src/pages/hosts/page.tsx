@@ -1,6 +1,7 @@
-import { CardHost } from "./components/cardHost";
+import { CardHost } from "./components/card-host";
 import { useHosts } from "./api/get-hosts";
 import { AddHostContainer } from "./components/add-host";
+import { AvailableHostsByDate } from "./components/available-hosts-by-date";
 
 export function HostsPage() {
     const { hosts, isLoading } = useHosts();
@@ -11,8 +12,9 @@ export function HostsPage() {
 
     return (
         <div className="max-w-6xl mx-auto my-12 space-y-6 px-4">
-            <div className="flex flex-row justify-between">
+            <div className="flex md:flex-row flex-col md:justify-between gap-3">
                 <h1 className="text-zinc-100 text-3xl font-semibold">Locações</h1>
+                <AvailableHostsByDate />
                 <AddHostContainer />
             </div>
             <div className="grid md:grid-cols-3 grid-cols-1 gap-3 auto-rows-[130px]">

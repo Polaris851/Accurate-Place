@@ -1,3 +1,4 @@
+import { CircleCheck } from "lucide-react";
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
 
@@ -20,6 +21,7 @@ export function Login() {
               />
 
               <Button type="submit" size="full">
+                <CircleCheck className="size-5 text-fuchsia-300"/>
                 Confirmar
               </Button>
             </form>

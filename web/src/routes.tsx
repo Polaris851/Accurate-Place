@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import { HostsPage } from "./pages/hosts/page";
 import { HostPage } from "./pages/host/page";
 import { Login } from "./pages/login/page";
-import { UsersPage } from "./pages/users/page";
+import { ClientsPage } from "./pages/clients/page";
 
 export function RouteManager() {
     return (
@@ -10,7 +10,7 @@ export function RouteManager() {
             {/* <Route path="/" element={<Login/>} /> */}
             <Route path="/" element={<HostsPage/>} />
             <Route path="/host/:hostId" element={<HostPage/>} />
-            <Route path="/users" element={<UsersPage />} />
+            <Route path="/client" element={<ClientsPage />} />
         </Routes>
     )
 }
