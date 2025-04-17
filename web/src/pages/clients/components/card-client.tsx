@@ -5,7 +5,7 @@ interface ClientProps {
     name: string,
 }
 
-export function CardClient({ clientId, name }: ClientProps) { 
+export function CardClient({ name }: ClientProps) { 
     return (
         <div 
          className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center justify-between" >
