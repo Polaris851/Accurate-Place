@@ -4,21 +4,33 @@ import { Input } from "../../components/input";
 import { FieldValues, useForm } from "react-hook-form";
 import { addToast } from "@heroui/react";
 import { api } from "../../lib/axios";
+import { useNavigate } from "react-router";
 
 export function Login() {
-
   const { handleSubmit, register } = useForm();
 
-  async function login(data: FieldValues) {
-    const response = await api.post("/login", data).catch(() => {
-      addToast({
-        title: "E-mail ou senha incorretos",
-        description: "Por favor verifique o seu e-mail e senha e tente novamente",
-        color: "danger"
-      });
-    });
+  const navigate = useNavigate();
 
-    console.log(response);
+  function login(data: FieldValues) {
+    api.post("/login", data)
+      .then((response) => {
+        const token = response.data.accessToken;
+
+        if (!token) {
+          throw new Error();
+        }
+
+        localStorage.setItem("access_token", token);
+        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        navigate("/");
+      })
+      .catch(() => {
+        addToast({
+          title: "E-mail ou senha incorretos",
+          description: "Por favor verifique o seu e-mail e senha e tente novamente",
+          color: "danger"
+        });
+      });
   }
 
   return (

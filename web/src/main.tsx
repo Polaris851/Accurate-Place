@@ -9,7 +9,9 @@ createRoot(document.getElementById('root')!).render(
   <HeroUIProvider>
     <ToastProvider />
     <BrowserRouter>
-      <App />
+      <main className={"purple-dark text-foreground bg-background"}>
+        <App />
+      </main>
     </BrowserRouter>
   </HeroUIProvider>,
 )
