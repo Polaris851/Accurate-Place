@@ -4,13 +4,13 @@ type DisabledDateRange = {
     before: Date;
 } | undefined;
 
-function addDaysFromDate(date: Date, days: number) {
-    const clone = new Date(date);
+// function addDaysFromDate(date: Date, days: number) {
+//     const clone = new Date(date);
 
-    clone.setDate(clone.getDate() + days);
+//     clone.setDate(clone.getDate() + days);
 
-    return clone;
-}
+//     return clone;
+// }
 
 export function useDisabledDateRange(currentDate: Date | undefined, nearestOccupiedDate: Date | undefined): DisabledDateRange {
     if (currentDate === undefined) {

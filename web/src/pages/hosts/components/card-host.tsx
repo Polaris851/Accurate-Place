@@ -15,7 +15,7 @@ function formatCurrency(value: number) {
     })
   }
 
-export function CardHost({ hostId, name, type, hourly_price }: HostProps) { 
+export function CardHost({ hostId, name, hourly_price }: HostProps) { 
     return (
         <NavLink 
          className="rounded-md bg-zinc-800 p-5 flex flex-col gap-3 overflow-hidden hover:ring-2 hover:ring-fuchsia-950" 

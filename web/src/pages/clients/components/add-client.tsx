@@ -5,7 +5,7 @@ import { Modal } from "../../../components/modal";
 import { FieldValues, useForm } from "react-hook-form";
 import { api } from "../../../lib/axios";
 import toast from "react-hot-toast";
-import { Check, CircleCheck } from "lucide-react";
+import { CircleCheck } from "lucide-react";
 
 export function AddClientContainer() {
   const [isNewClientModalOpen, setIsNewClientModalOpen] = useState(false);
