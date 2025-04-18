@@ -10,7 +10,6 @@ export function AuthGuard() {
     const { setUser } = useAuth();
 
     useEffect(() => {
-        console.log(user);
         setUser(user);
     }, [user]);
 

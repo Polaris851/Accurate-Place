@@ -19,7 +19,7 @@ export function useHosts() {
     })
     
     const hosts = useMemo(() => {
-        return data?.data;
+        return data?.data ?? [];
     }, [data]);
     
     return {
