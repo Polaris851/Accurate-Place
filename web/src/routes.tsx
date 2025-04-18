@@ -3,6 +3,7 @@ import { HostsPage } from "./pages/hosts/page";
 import { HostPage } from "./pages/host/page";
 import { ClientsPage } from "./pages/clients/page";
 import { Home } from "./pages/home/page";
+import { Login } from "./pages/login/page";
 
 export function RouteManager() {
     return (

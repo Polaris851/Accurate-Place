@@ -1,32 +1,37 @@
-import { ComponentProps, ReactNode } from "react"
-import { tv, VariantProps } from 'tailwind-variants'
+// import { ComponentProps, ReactNode } from "react"
+// import { tv, VariantProps } from 'tailwind-variants'
 
-const buttonVariants = tv({
-    base: "cursor-pointer rounded-lg px-5 font-medium flex items-center justify-center gap-2",
-    variants: {
-        variant: {
-            primary: "bg-fuchsia-950 text-fuchsia-300 hover:bg-fuchsia-800",
-            secondary: "bg-zinc-800 text-zinc-200 hover:bg-zinc-700"
-        },
-        size: {
-            default: "py-2",
-            full: "w-full h-11"
-        }
-    },
-    defaultVariants: {
-        variant: 'primary',
-        size: 'default'
-    }
-})
+import { Button as HeroButton, ButtonProps } from "@heroui/react";
 
-interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
-    children: ReactNode
-}
+// const buttonVariants = tv({
+//     base: "cursor-pointer rounded-lg px-5 font-medium flex items-center justify-center gap-2",
+//     variants: {
+//         variant: {
+//             primary: "bg-fuchsia-950 text-fuchsia-300 hover:bg-fuchsia-800",
+//             secondary: "bg-zinc-800 text-zinc-200 hover:bg-zinc-700"
+//         },
+//         size: {
+//             default: "py-2",
+//             full: "w-full h-11"
+//         }
+//     },
+//     defaultVariants: {
+//         variant: 'primary',
+//         size: 'default'
+//     }
+// })
+
+// interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
+//     children: ReactNode
+// }
 
 export function Button({ children, variant, size, ...props }: ButtonProps) {
     return (
-        <button {...props} className={`${buttonVariants({ variant, size })} ${props.className}`}>
+        <HeroButton
+            color={"primary"}
+            {...props}
+        >
             {children}
-        </button>
+        </HeroButton>
     )
 }
