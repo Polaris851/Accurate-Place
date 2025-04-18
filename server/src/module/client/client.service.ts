@@ -10,7 +10,7 @@ export class ClientService {
   constructor(@InjectRepository(Client) private readonly clientRepository: EntityRepository<Client>) {}
 
   async create(createClientDto: CreateClientDto) {
-    const client = this.clientRepository.create(createClientDto);
+    const client = this.clientRepository.create({ ...createClientDto, password: "" });
     await this.clientRepository.insert(client);
     return client;
   }

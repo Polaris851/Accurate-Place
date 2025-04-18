@@ -194,20 +194,20 @@
           "length": null,
           "mappedType": "integer"
         },
-        "client_id_id": {
-          "name": "client_id_id",
+        "client_id": {
+          "name": "client_id",
           "type": "int",
-          "unsigned": true,
+          "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "length": null,
           "mappedType": "integer"
         },
-        "host_id_id": {
-          "name": "host_id_id",
+        "host_id": {
+          "name": "host_id",
           "type": "int",
-          "unsigned": true,
+          "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
@@ -269,26 +269,6 @@
       "name": "reservations",
       "indexes": [
         {
-          "columnNames": [
-            "client_id_id"
-          ],
-          "composite": false,
-          "keyName": "reservations_client_id_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
-          "columnNames": [
-            "host_id_id"
-          ],
-          "composite": false,
-          "keyName": "reservations_host_id_id_index",
-          "constraint": false,
-          "primary": false,
-          "unique": false
-        },
-        {
           "keyName": "PRIMARY",
           "columnNames": [
             "id"
@@ -300,32 +280,7 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {
-        "reservations_client_id_id_foreign": {
-          "constraintName": "reservations_client_id_id_foreign",
-          "columnNames": [
-            "client_id_id"
-          ],
-          "localTableName": "reservations",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "clients",
-          "updateRule": "cascade"
-        },
-        "reservations_host_id_id_foreign": {
-          "constraintName": "reservations_host_id_id_foreign",
-          "columnNames": [
-            "host_id_id"
-          ],
-          "localTableName": "reservations",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "hosts",
-          "updateRule": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "nativeEnums": {}
     }
   ],

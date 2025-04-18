@@ -12,11 +12,17 @@ export class Client {
   @Property()
   email: string;
 
+  @Property({ hidden: true })
+  password: string;
+
   @Property()
   phone: string;
 
   @Property()
   cpf: string;
+
+  @Property({ type: "boolean" })
+  is_admin?: boolean = false;
 
   @Property()
   created_at?: Date = new Date();
