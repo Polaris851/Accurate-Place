@@ -7,10 +7,12 @@ import { ReservationModule } from './module/reservation/reservation.module';
 import config from "./mikro-orm.config";
 import { HostModule } from './module/host/host.module';
 import { AuthModule } from './auth/auth.module';
+import { Client } from './module/client/entities/client.entity';
 
 @Module({
   imports: [
     MikroOrmModule.forRoot(config),
+    MikroOrmModule.forFeature([Client]),
     AuthModule,
     ClientModule,
     ReservationModule,

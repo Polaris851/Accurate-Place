@@ -2,8 +2,11 @@ import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, Query } 
 import { HostService } from './host.service';
 import { CreateHostDto } from './dto/create-host.dto';
 import { UpdateHostDto } from './dto/update-host.dto';
+import { IsLogged } from 'src/auth/decorators/is-logged';
+import { IsAdmin } from 'src/auth/decorators/is-admin';
 
 @Controller('host')
+@IsLogged()
 export class HostController {
   constructor(private readonly hostService: HostService) {}
 
@@ -13,6 +16,7 @@ export class HostController {
   }
 
   @Post()
+  @IsAdmin()
   async create(@Body() createHostDto: CreateHostDto) {
     return await this.hostService.create(createHostDto);
   }
@@ -28,11 +32,13 @@ export class HostController {
   }
 
   @Put(':id')
+  @IsAdmin()
   async update(@Param('id', ParseIntPipe) id: number, @Body() updateHostDto: UpdateHostDto) {
     return await this.hostService.update(id, updateHostDto);
   }
 
   @Delete(':id')
+  @IsAdmin()
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.hostService.remove(id);
   }

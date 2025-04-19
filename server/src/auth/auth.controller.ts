@@ -10,6 +10,7 @@ import { JwtService } from "@nestjs/jwt";
 import { AccessTokenPayload } from "./types";
 import { AuthGuard, Request } from "./guards/auth.guard";
 import { UpdateMeDto } from "./dto/update.dto";
+import { IsLogged } from "./decorators/is-logged";
 
 @Controller()
 export class AuthController {
@@ -73,7 +74,7 @@ export class AuthController {
     }
 
     @Put("/update-me")
-    @UseGuards(AuthGuard)
+    @IsLogged()
     public async update(@Body() dto: UpdateMeDto, @Req() request: Request) {
         const user = await this.clientRepository.findOne({ id: request.user.id });
 

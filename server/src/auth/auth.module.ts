@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { AuthController } from "./auth.controller";
 import { MikroOrmModule } from "@mikro-orm/nestjs";
 import { Client } from "src/module/client/entities/client.entity";
@@ -7,6 +7,7 @@ import { config } from "dotenv";
 
 config()
 
+@Global()
 @Module({
     imports: [
         MikroOrmModule.forFeature([Client]),
@@ -19,6 +20,7 @@ config()
         })
     ],
     controllers: [AuthController],
-    providers: []
+    providers: [],
+    exports: [MikroOrmModule.forFeature([Client])]
 })
 export class AuthModule {}
