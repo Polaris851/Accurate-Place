@@ -1,6 +1,7 @@
 import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
+import { Search } from "lucide-react";
 
 interface Row {
     id: string | number;
@@ -52,6 +53,7 @@ export function DataTable(props: DataTableProps) {
         <div className={"p-4 bg-zinc-950 gap-4 flex flex-col"}>
             <div className={"flex gap-4"}>
                 <Input
+                    startContent={<Search className="size-5" />}
                     placeholder={"Pesquise"}
                     onChange={(e) => onSearch(e.target.value)}
                 />

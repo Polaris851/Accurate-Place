@@ -25,11 +25,13 @@ import { Button as HeroButton, ButtonProps } from "@heroui/react";
 //     children: ReactNode
 // }
 
-export function Button({ children, variant, size, ...props }: ButtonProps) {
+export function Button(props: ButtonProps) {
+    const { children, ...rest } = props;
+
     return (
         <HeroButton
             color={"primary"}
-            {...props}
+            {...rest}
         >
             {children}
         </HeroButton>

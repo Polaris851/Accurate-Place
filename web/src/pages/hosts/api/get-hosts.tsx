@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { api } from "../../../lib/axios";
-import { useLazy } from "../../../hooks/use-lazy";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Host {
     id: number,
@@ -14,16 +14,17 @@ export interface Host {
 }
 
 export function useHosts() {
-    const { data, isLoading } = useLazy({
-        fn: () => api.get<Host[]>('/host')
+    const queryInfo = useQuery({
+        queryKey: ["hosts"],
+        queryFn: () => api.get<Host[]>('/host')
     })
     
     const hosts = useMemo(() => {
-        return data?.data ?? [];
-    }, [data]);
-    
+        return queryInfo.data?.data ?? [];
+    }, [queryInfo.data]);
+
     return {
-        hosts,
-        isLoading
-    }
+        ...queryInfo,
+        hosts
+    };
 }
