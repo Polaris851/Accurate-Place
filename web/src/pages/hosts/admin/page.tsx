@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "../../../components/button";
 import { DataTable } from "../../../components/data-table";
-import { useHosts } from "../../hosts/api/get-hosts";
+import { useHosts } from "../api/get-hosts";
 import { HostForm } from "./components/host-form";
 import { HostActions } from "./components/table/actions";
 
@@ -44,20 +44,23 @@ export function AdminHostsPage() {
     }
 
     return (
-        <>
-            <HostForm
-                onClose={closeAddForm}
-                isOpen={addFormOpen}
-            />
-            <DataTable
-                loading={isLoading}
-                columns={columns}
-                rows={rows}
-                searchBy={["name", "hourly_price", "type"]}
-                barRightContent={(
-                    <Button startContent={<Plus />} onPress={openAddForm}>Adicionar</Button>
-                )}
-            />
-        </>
+        <div className={"bg-zinc-950 px-4 pt-10"}>
+            <div className={" bg-zinc-800 max-w-6xl p-8 mx-auto rounded"}>
+                <h1 className={"text-zinc-100 text-3xl font-semibold"}>Painel de Locações</h1>
+                <HostForm
+                    onClose={closeAddForm}
+                    isOpen={addFormOpen}
+                />
+                <DataTable
+                    loading={isLoading}
+                    columns={columns}
+                    rows={rows}
+                    searchBy={["name", "hourly_price", "type"]}
+                    barRightContent={(
+                        <Button startContent={<Plus />} onPress={openAddForm}>Adicionar</Button>
+                    )}
+                />
+            </div>
+        </div>
     )
 }

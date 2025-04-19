@@ -23,12 +23,12 @@ interface DataTableProps {
 
 export function DataTable(props: DataTableProps) {
     const [rows, setRows] = useState<Row[]>(props.rows);
-    
+
     const fuse = useMemo(() => {
         return new Fuse(props.rows, {
             keys: props.searchBy ?? [],
             includeMatches: true,
-			threshold: 0.45
+            threshold: 0.45
         })
     }, [props.rows]);
 
@@ -50,34 +50,34 @@ export function DataTable(props: DataTableProps) {
     }, [props.rows]);
 
     return (
-        <div className={"p-4 bg-zinc-950 gap-4 flex flex-col"}>
-            <div className={"flex gap-4"}>
-                <Input
-                    startContent={<Search className="size-5" />}
-                    placeholder={"Pesquise"}
-                    onChange={(e) => onSearch(e.target.value)}
-                />
-                {props.barRightContent}
-            </div>
-            <Table
-                rowHeight={40}
+        <Table
+            rowHeight={70}
+            topContent={(
+                <div className={"flex gap-4"}>
+                    <Input
+                        startContent={<Search className="size-5" />}
+                        placeholder={"Pesquise"}
+                        onChange={(e) => onSearch(e.target.value)}
+                    />
+                    {props.barRightContent}
+                </div>
+            )}
+        >
+            <TableHeader columns={props.columns}>
+                {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+            </TableHeader>
+            <TableBody
+                items={rows}
+                loadingContent={<Spinner />}
+                loadingState={props.loading ? "loading" : "idle"}
+                emptyContent={"Nenhuma locação encontrada"}
             >
-                <TableHeader columns={props.columns}>
-                    {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-                </TableHeader>
-                <TableBody
-                    items={rows}
-                    loadingContent={<Spinner />}
-                    loadingState={props.loading ? "loading" : "idle"}
-                    emptyContent={"Nenhuma locação encontrada"}
-                >
-                    {(item) => (
-                        <TableRow key={item.id}>
-                            {(key) => <TableCell>{item[key]}</TableCell>}
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-        </div>
+                {(item) => (
+                    <TableRow key={item.id}>
+                        {(key) => <TableCell>{item[key]}</TableCell>}
+                    </TableRow>
+                )}
+            </TableBody>
+        </Table>
     )
 }

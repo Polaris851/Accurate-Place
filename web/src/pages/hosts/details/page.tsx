@@ -1,5 +1,5 @@
 import { useParams } from "react-router"
-import { useHost } from "./api/get-host";
+import { useHost } from "../api/get-host";
 import { MakeReservation } from "./components/make-reservation";
 
 export function HostPage() {

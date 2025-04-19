@@ -3,7 +3,7 @@ import { Input } from "../../../../components/input";
 import { FieldValues, useForm } from "react-hook-form";
 import { Building, Home, Hotel, TentTree, Tractor } from "lucide-react";
 import { Button } from "../../../../components/button";
-import { Host, useHosts } from "../../../hosts/api/get-hosts";
+import { Host, useHosts } from "../../api/get-hosts";
 import { api } from "../../../../lib/axios";
 import { useMemo } from "react";
 

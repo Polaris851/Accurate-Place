@@ -1,6 +1,5 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
 import { MainNavBar } from "./components/navbar/main-navbar";
 import { api } from "./lib/axios";
 import { queryClient } from "./lib/query-client";
@@ -28,7 +27,6 @@ function App() {
       <div className="bg-[url(/public/bg.png)] bg-no-repeat bg-center h-screen justify-center items-center">
         <MainNavBar />
         <RouteManager />
-        <Toaster />
       </div>
     </QueryClientProvider>
   )

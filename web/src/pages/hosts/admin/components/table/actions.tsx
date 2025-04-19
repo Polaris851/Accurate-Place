@@ -4,7 +4,7 @@ import { EllipsisVertical } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { HostForm } from "../host-form";
-import { Host, useHosts } from "../../../../hosts/api/get-hosts";
+import { Host, useHosts } from "../../../api/get-hosts";
 import { DeleteConfirm } from "../delete-confirm";
 import { api } from "../../../../../lib/axios";
 

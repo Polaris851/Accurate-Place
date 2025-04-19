@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useLazy } from "../../../hooks/use-lazy";
 import { api } from "../../../lib/axios";
-import { Host } from "../../hosts/api/get-hosts";
+import { Host } from "./get-hosts";
 
 export function useHost(hostId?: number) {
     const queryInfo = useLazy({

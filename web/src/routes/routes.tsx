@@ -1,12 +1,11 @@
 import { Route, Routes } from "react-router";
-import { HostsPage } from "../pages/hosts/page";
-import { HostPage } from "../pages/host/page";
-import { ClientsPage } from "../pages/clients/page";
+import { HostsPage } from "../pages/hosts/client-page/page";
+import { HostPage } from "../pages/hosts/details/page";
 import { Home } from "../pages/home/page";
 import { Login } from "../pages/login/page";
 import { AuthGuard } from "./auth-guard";
 import { GuestGuard } from "./guest-guard";
-import { AdminHostsPage } from "../pages/admin/hosts/page";
+import { AdminHostsPage } from "../pages/hosts/admin/page";
 import { AdminGuard } from "./admin-guard";
 
 export function RouteManager() {
@@ -19,7 +18,6 @@ export function RouteManager() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/" element={<HostsPage/>} />
                 <Route path="/host/:hostId" element={<HostPage/>} />
-                <Route path="/client" element={<ClientsPage />} />
 
                 <Route element={<AdminGuard />}>
                     <Route path={"/admin/hosts"} element={<AdminHostsPage />} />
