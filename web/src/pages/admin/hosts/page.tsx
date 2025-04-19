@@ -1,7 +1,7 @@
-import { Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
 import { useHosts } from "../../hosts/api/get-hosts";
 import { DataTable } from "../../../components/data-table";
 import { Button } from "../../../components/button";
+import { useMemo } from "react";
 
 const columns = [
     { key: "name", label: "Nome" },
@@ -12,60 +12,27 @@ const columns = [
 export function AdminHostsPage() {
     const { hosts, isLoading } = useHosts();
 
+    const rows = useMemo(() => {
+        return hosts.map((host) => ({
+            id: host.id,
+            name: host.name,
+            type: host.type,
+            hourly_price: host.hourly_price.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+            })
+        }))
+    }, [hosts]);
+
     return (
         <DataTable
-            columns={[
-                {
-                    key: "name",
-                    label: "foda"
-                },
-                {
-                    key: "id",
-                    label: "id foda"
-                }
-            ]}
-            rows={[
-                {
-                    id: 1,
-                    name: "teste"
-                },
-                {
-                    id: 2,
-                    name: "teste"
-                },
-                {
-                    id: 3,
-                    name: "teste"
-                },
-            ]}
-            foo={(
+            loading={isLoading}
+            columns={columns}
+            rows={rows}
+            searchBy={["name", "hourly_price", "type"]}
+            barRightContent={(
                 <Button color={"primary"}>teste</Button>
             )}
-        >
-            {/* <TableCell></TableCell> */}
-        </DataTable>
-        // <div>
-        //     <Table
-        //         rowHeight={40}
-        //     >
-        //         <TableHeader columns={columns}>
-        //             {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-        //         </TableHeader>
-        //         <TableBody
-        //             items={hosts}
-        //             loadingContent={<Spinner/>}
-        //             loadingState={isLoading ? "loading" : "idle"}
-        //             emptyContent={"Nenhuma locação encontrada"}
-        //         >
-        //             {(host) => (
-        //                 <TableRow key={host.id}>
-        //                     <TableCell>{host.name}</TableCell>
-        //                     <TableCell>{host.type}</TableCell>
-        //                     <TableCell>R$ {host.hourly_price}</TableCell>
-        //                 </TableRow>
-        //             )}
-        //         </TableBody>
-        //     </Table>
-        // </div>
+        />
     )
 }

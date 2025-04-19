@@ -1,9 +1,10 @@
 import { Input, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
+import Fuse from "fuse.js";
 
 interface Row {
     id: string | number;
-    [key: string]: string | number;
+    [key: string]: ReactNode;
 }
 
 interface Column {
@@ -15,15 +16,46 @@ interface DataTableProps {
     columns: Column[];
     rows: Row[];
     loading?: boolean;
-    foo?: ReactNode;
+    barRightContent?: ReactNode;
+    searchBy?: string[];
 }
 
 export function DataTable(props: DataTableProps) {
+    const [rows, setRows] = useState<Row[]>(props.rows);
+    
+    const fuse = useMemo(() => {
+        return new Fuse(props.rows, {
+            keys: props.searchBy ?? [],
+            includeMatches: true,
+			threshold: 0.45
+        })
+    }, [props.rows]);
+
+    function onSearch(input: string) {
+        if (input === "") {
+            setRows(props.rows);
+            return;
+        }
+
+        const searchResult = fuse.search(input);
+
+        const rowsResult = searchResult.map((result) => result.item);
+
+        setRows(rowsResult);
+    }
+
+    useEffect(() => {
+        setRows(props.rows);
+    }, [props.rows]);
+
     return (
         <div className={"p-4 bg-zinc-950 gap-4 flex flex-col"}>
             <div className={"flex gap-4"}>
-                <Input placeholder={"Pesquise"} />
-                {props.foo}
+                <Input
+                    placeholder={"Pesquise"}
+                    onChange={(e) => onSearch(e.target.value)}
+                />
+                {props.barRightContent}
             </div>
             <Table
                 rowHeight={40}
@@ -32,7 +64,7 @@ export function DataTable(props: DataTableProps) {
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                 </TableHeader>
                 <TableBody
-                    items={props.rows}
+                    items={rows}
                     loadingContent={<Spinner />}
                     loadingState={props.loading ? "loading" : "idle"}
                     emptyContent={"Nenhuma locação encontrada"}
