@@ -1,13 +1,50 @@
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 import { useUser } from "../api/get-user";
+import { addToast, Avatar, Form } from "@heroui/react";
+import { Input } from "../../../components/input";
+import { Controller, FieldValues, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { User } from "../api/get-users";
+import { Button } from "../../../components/button";
+import { useAuth } from "../../../auth/use-auth";
+import { api } from "../../../lib/axios";
 
 export function UserPage() {
     const params = useParams();
 
-    const { user, isLoading } = useUser(Number(params?.userId))
+    const { user, isLoading, refetch } = useUser(Number(params?.userId));
+    const { user: currentUser } = useAuth();
+
+    const { handleSubmit, control, reset } = useForm<User & { password?: string }>();
+
+    const differentUser = currentUser?.id !== user?.id;
+
+    function saveProfile(data: FieldValues) {
+        const editPromise = api.put(`/update-me`, data).then(() => {
+            refetch();
+        });
+
+        addToast({
+            title: "Salvando",
+            color: "success",
+            promise: editPromise
+        });
+
+        return;
+    }
+
+    useEffect(() => {
+        if (user) {
+            reset(user);
+        }
+    }, [user]);
+
+    if (differentUser && !currentUser?.is_admin) {
+        return <Navigate to={"/"} />
+    }
 
     if (isLoading) {
-        return <div>loading component</div>
+        return <div>loading</div>
     }
 
     if (user === undefined) {
@@ -15,6 +52,87 @@ export function UserPage() {
     }
 
     return (
-        <h1>{user.name}</h1>
+        <div className={"w-full flex items-center justify-center pt-10"}>
+            <div className={"bg-zinc-900 rounded-lg p-4 min-w-[500px]"}>
+                <div className={"w-full flex items-center flex-col gap-2 mb-4"}>
+                    <Avatar style={{ width: 100, height: 100 }} src={`https://robohash.org/${user?.id}`} />
+                    <h1 className={"text-zinc-100 font-semibold text-2xl"}>{user.name}</h1>
+                </div>
+                <Form onSubmit={handleSubmit(saveProfile)}>
+                    <Controller
+                        name={"name"}
+                        control={control}
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                isDisabled={differentUser}
+                                placeholder="Seu nome"
+                                type="text"
+                            />
+                        )}
+                    />
+
+                    <Controller
+                        name={"email"}
+                        control={control}
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                isDisabled={differentUser}
+                                placeholder="E-mail"
+                                type="email"
+                            />
+                        )}
+                    />
+
+                    <Controller
+                        name={"password"}
+                        control={control}
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                isDisabled={differentUser}
+                                placeholder="Senha"
+                                type="password"
+                            />
+                        )}
+                    />
+
+                    <Controller
+                        name={"phone"}
+                        control={control}
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                isDisabled={differentUser}
+                                placeholder="Telefone"
+                                type="text"
+                            />
+                        )}
+                    />
+
+                    <Controller
+                        name={"cpf"}
+                        control={control}
+                        render={({ field }) => (
+                            <Input
+                                {...field}
+                                isDisabled={differentUser}
+                                placeholder="CPF"
+                                type="text"
+                            />
+                        )}
+                    />
+
+                    <Button
+                        isDisabled={differentUser}
+                        fullWidth
+                        type={"submit"}
+                    >
+                        Salvar
+                    </Button>
+                </Form>
+            </div>
+        </div>
     )
 }

@@ -1,6 +1,6 @@
 import { EntityManager, EntityRepository } from "@mikro-orm/mysql";
 import { InjectRepository } from "@mikro-orm/nestjs";
-import { BadRequestException, Body, ConflictException, Controller, ForbiddenException, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, ConflictException, Controller, ForbiddenException, Get, Post, Put, Req, UseGuards } from "@nestjs/common";
 import { Client } from "src/module/client/entities/client.entity";
 import { RegisterDto } from "./dto/register.dto";
 import * as bcrypt from "bcrypt";
@@ -9,6 +9,7 @@ import { JwtService } from "@nestjs/jwt";
 
 import { AccessTokenPayload } from "./types";
 import { AuthGuard, Request } from "./guards/auth.guard";
+import { UpdateMeDto } from "./dto/update.dto";
 
 @Controller()
 export class AuthController {
@@ -69,6 +70,28 @@ export class AuthController {
             success: true,
             message: "Usuário criado com sucesso!"
         }
+    }
+
+    @Put("/update-me")
+    @UseGuards(AuthGuard)
+    public async update(@Body() dto: UpdateMeDto, @Req() request: Request) {
+        const user = await this.clientRepository.findOne({ id: request.user.id });
+
+        if (user === null) {
+            throw new BadRequestException("Usuário não encontrado na base de dados");
+        }
+
+        if (!Boolean(dto.password)) {
+            delete dto.password;
+        }
+
+        if (dto.password) {
+            dto.password = await bcrypt.hash(dto.password, 10);
+        }
+        
+        console.log(dto);
+ 
+        await this.clientRepository.nativeUpdate(user, dto);
     }
 
     @Get("/me")
