@@ -44,9 +44,9 @@ export function AdminHostsPage() {
     }
 
     return (
-        <div className={"bg-zinc-950 px-4 pt-10"}>
-            <div className={" bg-zinc-800 max-w-6xl p-8 mx-auto rounded"}>
-                <h1 className={"text-zinc-100 text-3xl font-semibold"}>Painel de Locações</h1>
+        <div className={"bg-zinc-950 px-4 md:pt-10 pt-4"}>
+            <div className={" md:bg-zinc-800 max-w-6xl md:p-8 mx-auto rounded-lg"}>
+                <h1 className={"text-zinc-100 text-3xl font-semibold mb-4"}>Painel de Locações</h1>
                 <HostForm
                     onClose={closeAddForm}
                     isOpen={addFormOpen}
