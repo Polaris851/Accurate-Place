@@ -3,30 +3,30 @@ import { Button } from "../../../../../components/button";
 import { EllipsisVertical } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
-import { HostForm } from "../host-form";
-import { Host, useHosts } from "../../../api/get-hosts";
-import { DeleteConfirm } from "../../../../../components/delete-confirm";
 import { api } from "../../../../../lib/axios";
+import { User, useUsers } from "../../../api/get-users";
+import { DeleteConfirm } from "../../../../../components/delete-confirm";
+import { UserForm } from "../user-form";
 
 interface ActionsProps {
-    host: Host;
+    user: User;
 }
 
-export function HostActions(props: ActionsProps) {
-    const { host } = props;
+export function UserActions(props: ActionsProps) {
+    const { user } = props;
     const [isEditing, setIsEditing] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
 
-    const { refetch } = useHosts();
+    const { refetch } = useUsers();
 
     const navigate = useNavigate();
 
-    function handleDeleteHost() {
-        const deletePromise = api.delete(`/host/${host.id}`).then(() => {
+    function handleDeleteUser() {
+        const deletePromise = api.delete(`/client/${user.id}`).then(() => {
             refetch();
         });
         addToast({
-            title: "Excluindo locação",
+            title: "Excluindo usuário",
             color: "success",
             promise: deletePromise
         });
@@ -35,14 +35,14 @@ export function HostActions(props: ActionsProps) {
 
     return (
         <>
-            <HostForm isOpen={isEditing} onClose={() => setIsEditing(false)} defaultValues={host} />
-            <DeleteConfirm isOpen={isDelete} onClose={() => setIsDelete(false)} onConfirm={handleDeleteHost} />
+            <UserForm isOpen={isEditing} onClose={() => setIsEditing(false)} defaultValues={user} />
+            <DeleteConfirm isOpen={isDelete} onClose={() => setIsDelete(false)} onConfirm={handleDeleteUser} />
             <Dropdown>
                 <DropdownTrigger>
                     <Button color={"default"} variant={"light"} isIconOnly><EllipsisVertical /></Button>
                 </DropdownTrigger>
                 <DropdownMenu>
-                    <DropdownItem onPress={() => navigate(`/host/${host.id}`)} key={"view"}>Visualizar</DropdownItem>
+                    <DropdownItem onPress={() => navigate(`/client/${user.id}`)} key={"view"}>Visualizar</DropdownItem>
                     <DropdownItem onPress={() => setIsEditing(true)} key={"edit"}>Editar</DropdownItem>
                     <DropdownItem onPress={() => setIsDelete(true)} key={"delete"}>Deletar</DropdownItem>
                 </DropdownMenu>

@@ -7,6 +7,8 @@ import { AuthGuard } from "./auth-guard";
 import { GuestGuard } from "./guest-guard";
 import { AdminHostsPage } from "../pages/hosts/admin/page";
 import { AdminGuard } from "./admin-guard";
+import { AdminUsersPage } from "../pages/users/admin/page";
+import { UserPage } from "../pages/users/details/page";
 
 export function RouteManager() {
     return (
@@ -18,9 +20,11 @@ export function RouteManager() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/" element={<HostsPage/>} />
                 <Route path="/host/:hostId" element={<HostPage/>} />
+                <Route path="/client/:userId" element={<UserPage/>} />
 
                 <Route element={<AdminGuard />}>
                     <Route path={"/admin/hosts"} element={<AdminHostsPage />} />
+                    <Route path={"/admin/clients"} element={<AdminUsersPage />} />
                 </Route>
             </Route>
         </Routes>

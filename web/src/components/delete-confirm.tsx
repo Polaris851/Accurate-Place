@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
-import { Button } from "../../../../components/button";
+import { Button } from "./button";
 import { Trash } from "lucide-react";
 
 interface DeleteProps {
