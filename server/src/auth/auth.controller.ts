@@ -5,19 +5,19 @@ import { Client } from "src/module/client/entities/client.entity";
 import { RegisterDto } from "./dto/register.dto";
 import * as bcrypt from "bcrypt";
 import { LoginDto } from "./dto/login.dto";
-import { JwtService } from "@nestjs/jwt";
 
 import { AccessTokenPayload } from "./types";
 import { AuthGuard, Request } from "./guards/auth.guard";
 import { UpdateMeDto } from "./dto/update.dto";
 import { IsLogged } from "./decorators/is-logged";
+import { AuthService } from "./auth.service";
 
 @Controller()
 export class AuthController {
     constructor(
         @InjectRepository(Client)
         private readonly clientRepository: EntityRepository<Client>,
-        private readonly jwtService: JwtService
+        private readonly authService: AuthService,
     ) {}
 
     @Post("/login")
@@ -28,21 +28,9 @@ export class AuthController {
             throw new BadRequestException("Usuário não existe")
         }
 
-        const isPasswordValid = await bcrypt.compare(dto.password, user.password);
+        return await this.authService.verifyPasswordAndGenerateToken(dto, user);
 
-        if (!isPasswordValid) {
-            throw new ForbiddenException("Senha incorreta");
-        }
-
-        const payload: AccessTokenPayload = {
-            userId: user.id
-        }
-
-        const accessToken = this.jwtService.sign(payload);
-
-        return {
-            accessToken
-        };
+     
     }
 
     @Post("/register")
@@ -67,8 +55,11 @@ export class AuthController {
             throw new Error("Houve alguma falha ao inserir o usuário");
         }
 
+        const accessToken = this.authService.verifyPasswordAndGenerateToken(dto, client);
+
         return {
             success: true,
+            accessToken: accessToken,
             message: "Usuário criado com sucesso!"
         }
     }

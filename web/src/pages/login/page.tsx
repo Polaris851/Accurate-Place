@@ -4,7 +4,7 @@ import { Input } from "../../components/input";
 import { FieldValues, useForm } from "react-hook-form";
 import { addToast } from "@heroui/react";
 import { api } from "../../lib/axios";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export function Login() {
   const { handleSubmit, register } = useForm();
@@ -36,9 +36,17 @@ export function Login() {
   return (
     <div className="h-screen grid md:grid-cols-2 grid-cols-1">
       <div className="flex items-center justify-center">
-        <p>imagem</p>
+        <img src="/undraw_enter.svg" className="size-1/2" />
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-zinc-100 text-3xl font-semibold">Seja bem-vindo!</h1>
+          <p className="text-zinc-400 text-sm">Não tem uma conta? {" "}
+            <Link to={"/register"} className="text-fuchsia-300 underline font-semibold">
+              Clique aqui
+            </Link></p>
+        </div>
+
         <form
           className="w-[540px] py-5 px-6 space-y-3"
           onSubmit={handleSubmit(login)}

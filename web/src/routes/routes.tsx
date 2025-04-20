@@ -9,12 +9,14 @@ import { AdminHostsPage } from "../pages/hosts/admin/page";
 import { AdminGuard } from "./admin-guard";
 import { AdminUsersPage } from "../pages/users/admin/page";
 import { UserPage } from "../pages/users/details/page";
+import { Register } from "../pages/register/page";
 
 export function RouteManager() {
     return (
         <Routes>
             <Route element={<GuestGuard />}>
                 <Route path="/login" element={<Login/>} />
+                <Route path="/register" element={<Register />} />
             </Route>
             <Route element={<AuthGuard />}>
                 <Route path="/home" element={<Home />} />

@@ -10,11 +10,6 @@ import { IsAdmin } from 'src/auth/decorators/is-admin';
 export class HostController {
   constructor(private readonly hostService: HostService) {}
 
-  @Get('available')
-  async getAvailableHosts(@Query('start_date') start_date: string, @Query('end_date') end_date: string) {
-    return await this.hostService.getAvailableHosts(start_date, end_date);
-  }
-
   @Post()
   @IsAdmin()
   async create(@Body() createHostDto: CreateHostDto) {
@@ -22,7 +17,11 @@ export class HostController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(@Query('start_date') startDate?: string, @Query('end_date') endDate?: string) {
+    if (startDate && endDate) {
+      return await this.hostService.getAvailableHosts(startDate, endDate);
+    }
+    
     return await this.hostService.findAll();
   }
 

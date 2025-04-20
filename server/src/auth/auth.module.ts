@@ -4,6 +4,7 @@ import { MikroOrmModule } from "@mikro-orm/nestjs";
 import { Client } from "src/module/client/entities/client.entity";
 import { JwtModule } from "@nestjs/jwt";
 import { config } from "dotenv";
+import { AuthService } from "./auth.service";
 
 config()
 
@@ -20,7 +21,7 @@ config()
         })
     ],
     controllers: [AuthController],
-    providers: [],
+    providers: [AuthService],
     exports: [MikroOrmModule.forFeature([Client])]
 })
 export class AuthModule {}
