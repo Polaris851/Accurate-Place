@@ -1,7 +1,7 @@
 import { addToast, Form, Modal, ModalBody, ModalContent, ModalHeader, Select, SelectItem, Textarea } from "@heroui/react";
 import { Input } from "../../../../components/input";
 import { FieldValues, useForm } from "react-hook-form";
-import { Building, Home, Hotel, TentTree, Tractor } from "lucide-react";
+import { Building2, Home, Hotel, TentTree, Tractor } from "lucide-react";
 import { Button } from "../../../../components/button";
 import { Host, useHosts } from "../../api/get-hosts";
 import { api } from "../../../../lib/axios";
@@ -75,7 +75,7 @@ export function HostForm(props: HostFormProps) {
                                     size={"lg"}
                                 >
                                     <SelectItem startContent={<Home className={"size-4"} />} key={"home"}> Casa</SelectItem>
-                                    <SelectItem startContent={<Building className={"size-4"} />} key={"apartment"}>Apartamento</SelectItem>
+                                    <SelectItem startContent={<Building2 className={"size-4"} />} key={"apartment"}>Apartamento</SelectItem>
                                     <SelectItem startContent={<Hotel className={"size-4"} />} key={"hotel"}>Hotel</SelectItem>
                                     <SelectItem startContent={<Tractor className={"size-4"} />} key={"farm"}>Fazenda</SelectItem>
                                     <SelectItem startContent={<TentTree className={"size-4"} />} key={"cabin"}>Cabana</SelectItem>

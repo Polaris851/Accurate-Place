@@ -1,19 +1,13 @@
 import { Card, CardFooter, Image } from "@heroui/react";
 import { Link } from "react-router"
 import { HostTypeFormatter } from "../../components/host-type-formatter";
+import { formatCurrency } from "../../../../utils/format-currency";
 
 interface HostProps {
     hostId: number;
     name: string,
     type: string,
     hourly_price: number,
-}
-
-function formatCurrency(value: number) {
-    return value.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-    })
 }
 
 export function CardHost({ hostId, type, name, hourly_price }: HostProps) {

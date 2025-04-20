@@ -42,7 +42,7 @@ export function HostActions(props: ActionsProps) {
                     <Button color={"default"} variant={"light"} isIconOnly><EllipsisVertical /></Button>
                 </DropdownTrigger>
                 <DropdownMenu>
-                    <DropdownItem onPress={() => navigate(`/host/${host.id}`)} key={"view"}>Visualizar</DropdownItem>
+                    <DropdownItem onPress={() => navigate(`/admin/hosts/${host.id}`)} key={"view"}>Visualizar</DropdownItem>
                     <DropdownItem onPress={() => setIsEditing(true)} key={"edit"}>Editar</DropdownItem>
                     <DropdownItem onPress={() => setIsDelete(true)} key={"delete"}>Deletar</DropdownItem>
                 </DropdownMenu>

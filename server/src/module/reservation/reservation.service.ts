@@ -66,7 +66,9 @@ export class ReservationService {
   }
 
   async findAll() {
-    return await this.reservationRepository.findAll();
+    return await this.reservationRepository.findAll({
+      populate: ["client", "host"]
+    });
   }
 
   async findOne(id: number) {

@@ -19,6 +19,7 @@ interface DataTableProps {
     loading?: boolean;
     barRightContent?: ReactNode;
     searchBy?: string[];
+    emptyContentMessage?: string;
 }
 
 export function DataTable(props: DataTableProps) {
@@ -70,7 +71,7 @@ export function DataTable(props: DataTableProps) {
                 items={rows}
                 loadingContent={<Spinner />}
                 loadingState={props.loading ? "loading" : "idle"}
-                emptyContent={"Nenhuma locação encontrada"}
+                emptyContent={props.emptyContentMessage ?? "Nenhum resultado encontrado"}
             >
                 {(item) => (
                     <TableRow key={item.id}>

@@ -5,6 +5,7 @@ import { DataTable } from "../../../components/data-table";
 import { useHosts } from "../api/get-hosts";
 import { HostForm } from "./components/host-form";
 import { HostActions } from "./components/table/actions";
+import { HostTypeFormatter } from "../components/host-type-formatter";
 
 const columns = [
     { key: "name", label: "NOME" },
@@ -22,7 +23,9 @@ export function AdminHostsPage() {
         return hosts.map((host) => ({
             id: host.id,
             name: host.name,
-            type: host.type,
+            type: (
+                <HostTypeFormatter type={host.type} showIcon />
+            ),
             hourly_price: host.hourly_price.toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -59,6 +62,7 @@ export function AdminHostsPage() {
                     barRightContent={(
                         <Button startContent={<Plus />} onPress={openAddForm}>Adicionar</Button>
                     )}
+                    emptyContentMessage={"Nenhuma locação encontrada"}
                 />
             </div>
         </div>

@@ -47,6 +47,7 @@ export function AdminUsersPage() {
                     columns={columns}
                     rows={rows}
                     searchBy={["searchName", "searchEmail", "cpf"]}
+                    emptyContentMessage={"Nenhum usuário encontrado"}
                 />
             </div>
         </div>

@@ -10,6 +10,7 @@ import { AdminGuard } from "./admin-guard";
 import { AdminUsersPage } from "../pages/users/admin/page";
 import { UserPage } from "../pages/users/details/page";
 import { Register } from "../pages/register/page";
+import { AdminHostPage } from "../pages/hosts/admin/host/page";
 
 export function RouteManager() {
     return (
@@ -27,6 +28,7 @@ export function RouteManager() {
                 <Route element={<AdminGuard />}>
                     <Route path={"/admin"} element={<Home />} />
                     <Route path={"/admin/hosts"} element={<AdminHostsPage />} />
+                    <Route path={"/admin/hosts/:hostId"} element={<AdminHostPage />} />
                     <Route path={"/admin/clients"} element={<AdminUsersPage />} />
                 </Route>
             </Route>
