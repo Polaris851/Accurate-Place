@@ -28,9 +28,9 @@ export class AuthController {
             throw new BadRequestException("Usuário não existe")
         }
 
-        return await this.authService.verifyPasswordAndGenerateToken(dto, user);
+        const accessToken = await this.authService.verifyPasswordAndGenerateToken(dto, user);
 
-     
+        return { accessToken };
     }
 
     @Post("/register")
@@ -55,11 +55,11 @@ export class AuthController {
             throw new Error("Houve alguma falha ao inserir o usuário");
         }
 
-        const accessToken = this.authService.verifyPasswordAndGenerateToken(dto, client);
+        const accessToken = await this.authService.verifyPasswordAndGenerateToken(dto, client);
 
         return {
             success: true,
-            accessToken: accessToken,
+            accessToken,
             message: "Usuário criado com sucesso!"
         }
     }

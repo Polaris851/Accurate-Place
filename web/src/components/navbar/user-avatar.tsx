@@ -9,10 +9,11 @@ export function UserAvatar() {
     const navigate = useNavigate();
 
     function logout()  {
-        navigate("/login");
         localStorage.removeItem("access_token");
         api.defaults.headers.common["Authorization"] = undefined;
         setUser(null);
+        
+        location.reload();
     }
 
     return (

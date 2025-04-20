@@ -1,12 +1,13 @@
 import { useParams } from "react-router"
 import { useHost } from "../api/get-host";
 import { MakeReservation } from "./components/make-reservation";
+import { HostTypeFormatter } from "../components/host-type-formatter";
 
 export function HostPage() {
     const params = useParams();
 
     const { host, isLoading } = useHost(Number(params?.hostId));
-    
+
     if (isLoading) {
         return <div>loading component</div>
     }
@@ -19,17 +20,18 @@ export function HostPage() {
         <div className="max-w-6xl mx-auto my-12 space-y-6 px-4">
             <div className="flex md:flex-row flex-col justify-between mx-2">
 
-                <div className="my-4 flex flex-col items-center md:items-start">
+                <div className="my-4 flex flex-col items-center md:items-start px-6">
                     <div className="space-y-2">
                         <h1 className="text-2xl font-semibold">{host.name}</h1>
-                        <p>{host.type}</p>
-                        {/* <p> 25 reservas já feitas!</p> */}
-                        <p>{host.description}</p>
+                        <p className="text-zinc-100 text-lg">
+                            <HostTypeFormatter type={host.type} showIcon />
+                        </p>
+                        <p className="text-zinc-100 text-base">{host.description}</p>
                     </div>
-                    
+
                 </div>
-                
-                <MakeReservation occupiedDates={host.occupied_dates}  />
+
+                <MakeReservation occupiedDates={host.occupied_dates} />
             </div>
         </div>
     )

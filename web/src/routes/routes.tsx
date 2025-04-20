@@ -18,13 +18,14 @@ export function RouteManager() {
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<Register />} />
             </Route>
+
             <Route element={<AuthGuard />}>
-                <Route path="/home" element={<Home />} />
                 <Route path="/" element={<HostsPage/>} />
                 <Route path="/host/:hostId" element={<HostPage/>} />
                 <Route path="/client/:userId" element={<UserPage/>} />
 
                 <Route element={<AdminGuard />}>
+                    <Route path={"/admin"} element={<Home />} />
                     <Route path={"/admin/hosts"} element={<AdminHostsPage />} />
                     <Route path={"/admin/clients"} element={<AdminUsersPage />} />
                 </Route>

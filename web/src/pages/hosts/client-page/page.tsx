@@ -23,7 +23,7 @@ export function HostsPage() {
                     onSubmit={setRange}
                 />
             </div>
-            <div className="grid md:grid-cols-3 grid-cols-1 gap-3 auto-rows-[130px]">
+            <div className="grid md:grid-cols-3 grid-cols-1 gap-4 auto-rows-[250px]">
                 {
                     hosts?.map(host =>
                         <CardHost

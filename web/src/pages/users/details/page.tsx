@@ -53,9 +53,9 @@ export function UserPage() {
 
     return (
         <div className={"w-full flex items-center justify-center pt-10"}>
-            <div className={"bg-zinc-900 rounded-lg p-4 min-w-[500px]"}>
+            <div className={"bg-zinc-900 rounded-lg p-4 md:min-w-[500px]"}>
                 <div className={"w-full flex items-center flex-col gap-2 mb-4"}>
-                    <Avatar style={{ width: 100, height: 100 }} src={`https://robohash.org/${user?.id}`} />
+                    <Avatar className="md:min-w-24 md:min-h-24 w-14 h-14" src={`https://robohash.org/${user?.id}`} />
                     <h1 className={"text-zinc-100 font-semibold text-2xl"}>{user.name}</h1>
                 </div>
                 <Form onSubmit={handleSubmit(saveProfile)}>

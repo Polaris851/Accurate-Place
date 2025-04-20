@@ -19,9 +19,8 @@ export default {
         "purple-dark": {
           extend: "dark", // <- inherit default values from dark theme
           colors: {
-            background: "#0D001A",
+            background: "#09090b",
             foreground: "#ffffff",
-            content1: "#000",
             primary: {
               50: "#3B096C",
               100: "#520F83",

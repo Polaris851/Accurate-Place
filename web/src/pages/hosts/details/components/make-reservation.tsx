@@ -46,17 +46,6 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
             end_date: range?.to,
             status: "foo"
         });
-        // toast.promise(() => api.post("/reservation", {
-        //     client_id: 7,
-        //     host_id: +hostId,
-        //     start_date: range?.from,
-        //     end_date: range?.to,
-        //     status: "foo"
-        // }), {
-        //     loading: "Criando reserva!",
-        //     success: "Tudo certo com a sua reserva!",
-        //     error: "Houve um erro ao criar a sua reserva :("
-        // })
     }
 
     console.log(range);
@@ -66,7 +55,7 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center px-6">
             <div className="space-y-4 my-2">
                 <RangeCalendar
                     calendarWidth={250}

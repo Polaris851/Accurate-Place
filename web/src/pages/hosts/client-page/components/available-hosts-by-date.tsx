@@ -1,8 +1,6 @@
 
-import { Search } from "lucide-react";
 import { Button } from "../../../../components/button";
 import { DateRangePicker } from "@heroui/react";
-import { FieldValues } from "react-hook-form";
 import { useState } from "react";
 
 export interface Range {
@@ -19,16 +17,13 @@ export function AvailableHostsByDate(props: Props) {
 
   const [range, setRange] = useState<Range | undefined>();
 
-  console.log(range);
-
   return (
-    <div>
+    <div className="flex gap-3 bg-zinc-800 rounded-lg items-center justify-center py-1.5 px-2">
       <DateRangePicker
-        className="text-violet-900"
-        color="secondary"
         label="Locações Disponiveis"
-        pageBehavior="single"
-        visibleMonths={2}
+        variant={undefined}
+        selectorButtonPlacement="start"
+        visibleMonths={1}
         onChange={(_range) => {
           if (_range === null) {
             setRange(undefined);
@@ -43,7 +38,6 @@ export function AvailableHostsByDate(props: Props) {
         }}
       />
       <Button onPress={() => onSubmit(range)}>
-        <Search className="size-5 text-zinc-200" />
         Buscar
       </Button>
     </div>
