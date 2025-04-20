@@ -11,6 +11,7 @@ import { AdminUsersPage } from "../pages/users/admin/page";
 import { UserPage } from "../pages/users/details/page";
 import { Register } from "../pages/register/page";
 import { AdminHostPage } from "../pages/hosts/admin/host/page";
+import { MyReservations } from "../pages/my-reservations/page";
 
 export function RouteManager() {
     return (
@@ -24,6 +25,7 @@ export function RouteManager() {
                 <Route path="/" element={<HostsPage/>} />
                 <Route path="/host/:hostId" element={<HostPage/>} />
                 <Route path="/client/:userId" element={<UserPage/>} />
+                <Route path="/my-reservations" element={<MyReservations/>} />
 
                 <Route element={<AdminGuard />}>
                     <Route path={"/admin"} element={<Home />} />

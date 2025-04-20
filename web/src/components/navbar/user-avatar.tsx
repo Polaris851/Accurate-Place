@@ -29,6 +29,7 @@ export function UserAvatar() {
             </DropdownTrigger>
             <DropdownMenu variant={"flat"}>
                 <DropdownItem onPress={() => navigate(`/client/${user?.id}`)} key={"profile"}>Meu perfil</DropdownItem>
+                <DropdownItem onPress={() => navigate("/my-reservations")} key={"view-reservations"}>Minhas reservas</DropdownItem>
                 <DropdownItem color={"danger"} onPress={logout} key={"logout"}>Sair</DropdownItem>
             </DropdownMenu>
         </Dropdown>

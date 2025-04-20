@@ -11,8 +11,12 @@ export function useReservations(options?: GetReservationOptions) {
     const { hostId } = options ?? {};
 
     const queryInfo = useQuery({
-        queryKey: ["reservations"],
-        queryFn: () => api.get<Reservation[]>("/reservation")
+        queryKey: ["reservations", { hostId }],
+        queryFn: () => api.get<Reservation[]>("/reservation", {
+            params: {
+                hostId
+            }
+        })
     });
 
     const reservations = useMemo(() => {

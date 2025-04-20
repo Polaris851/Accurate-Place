@@ -65,8 +65,28 @@ export class ReservationService {
     return reservation;
   }
 
+  public async findByUser(user: Client) {
+    const reservations = await this.reservationRepository.findAll({
+      where: {
+        client_id: user.id
+      },
+      populate: ["client", "host"]
+    });
+
+    return reservations;
+  }
+
   async findAll() {
     return await this.reservationRepository.findAll({
+      populate: ["client", "host"]
+    });
+  }
+
+  public async findByHostId(hostId: number) {
+    return await this.reservationRepository.findAll({
+      where: {
+        host_id: hostId
+      },
       populate: ["client", "host"]
     });
   }
