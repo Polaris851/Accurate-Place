@@ -26,7 +26,7 @@ export class ReservationService {
       throw new NotFoundException('Cliente não encontrado');
     }
 
-    if (createReservationDto.start_date >= createReservationDto.end_date) {
+    if (createReservationDto.start_date > createReservationDto.end_date) {
       throw new BadRequestException('A data inicial deve ser anterior à data final');
     }
     

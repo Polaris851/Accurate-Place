@@ -39,16 +39,16 @@ export function UserPage() {
         }
     }, [user]);
 
-    if (differentUser && !currentUser?.is_admin) {
-        return <Navigate to={"/"} />
-    }
-
     if (isLoading) {
         return <div>loading</div>
     }
 
     if (user === undefined) {
         return <div>host não encontrado</div>
+    }
+
+    if (differentUser && !currentUser?.is_admin) {
+        return <Navigate to={"/"} />
     }
 
     return (

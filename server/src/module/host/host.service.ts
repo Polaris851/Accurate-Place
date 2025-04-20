@@ -12,7 +12,7 @@ export class HostService {
   constructor(
     @InjectRepository(Host) private readonly hostRepository: EntityRepository<Host>,
     @InjectRepository(Reservation) private readonly reservationRepository: EntityRepository<Reservation>
-) {}
+  ) { }
 
   async create(createHostDto: CreateHostDto) {
     const host = this.hostRepository.create(createHostDto);
@@ -31,23 +31,22 @@ export class HostService {
     const reservations = await this.reservationRepository.find({
       host: { id: id }
     });
-  
-    const occupiedDates = new Set<Date>();
-  
+
+    const occupiedDates: Date[] = [];
+
     for (const reservation of reservations) {
       const start = this.normalizeDate(new Date(reservation.start_date));
       const end = this.normalizeDate(new Date(reservation.end_date));
-  
+
       for (
         let date = new Date(start);
         date <= end;
         date.setDate(date.getDate() + 1)
       ) {
-        const formatted = date.toISOString().split('T')[0];
-        occupiedDates.add(date);
+        occupiedDates.push(new Date(date));
       }
     }
-  
+
     return {
       ...host,
       occupied_dates: Array.from(occupiedDates).sort()
@@ -57,7 +56,7 @@ export class HostService {
   async update(id: number, updateHostDto: UpdateHostDto) {
     const host = await this.hostRepository.findOne({ id });
     if (!host) throw new NotFoundException('Locação não encontrada');
-    
+
     return await this.hostRepository.nativeUpdate(host, updateHostDto);
   }
 
@@ -76,7 +75,7 @@ export class HostService {
     if (start >= end) {
       throw new BadRequestException('A data inicial deve ser anterior à data final');
     }
-    
+
     const hostsBusy = await this.reservationRepository.find({
       start_date: { $lt: end },
       end_date: { $gt: start }

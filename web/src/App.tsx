@@ -24,7 +24,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-[url(/public/bg.png)] bg-no-repeat bg-center h-screen justify-center items-center">
+      <div className="bg-[url(/public/bg.png)] bg-no-repeat bg-center justify-center items-center">
         <MainNavBar />
         <RouteManager />
       </div>

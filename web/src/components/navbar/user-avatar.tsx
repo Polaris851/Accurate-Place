@@ -26,8 +26,9 @@ export function UserAvatar() {
                     }}
                 />
             </DropdownTrigger>
-            <DropdownMenu color={"danger"} variant={"flat"}>
-                <DropdownItem onPress={logout} key={"logout"}>Sair</DropdownItem>
+            <DropdownMenu variant={"flat"}>
+                <DropdownItem onPress={() => navigate(`/client/${user?.id}`)} key={"profile"}>Meu perfil</DropdownItem>
+                <DropdownItem color={"danger"} onPress={logout} key={"logout"}>Sair</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     );

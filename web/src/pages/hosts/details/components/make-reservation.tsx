@@ -1,11 +1,16 @@
-import { useState } from "react";
-import { DateRange, DayPicker } from "react-day-picker";
+import { useMemo, useState } from "react";
 import { CheckInOut } from "./check-in-out";
 import { Button } from "../../../../components/button";
 import { api } from "../../../../lib/axios";
 import { useParams } from "react-router";
-import { useDisabledDateRange } from "../hooks/use-disabled-date-range";
 import { Host } from "../../api/get-hosts";
+import { RangeCalendar } from "@heroui/react";
+import { useAuth } from "../../../../auth/use-auth";
+
+interface Range {
+    from: Date;
+    to: Date;
+}
 
 interface MakeReservationProps {
     occupiedDates: Host["occupied_dates"]
@@ -14,15 +19,33 @@ interface MakeReservationProps {
 export function MakeReservation({ occupiedDates }: MakeReservationProps) {
     const { hostId } = useParams();
 
-    const [range, setRange] = useState<DateRange | undefined>();
+    const [range, setRange] = useState<Range | undefined>();
+    const { user } = useAuth();
 
-    const disabledRange = useDisabledDateRange(range?.from, new Date(occupiedDates?.[0]));
+    const disabledDateMap = useMemo(() => {
+        const map = new Map<string, Date>();
+
+        for (const isoDate of occupiedDates) {
+            const date = new Date(isoDate);
+            const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+            map.set(key, date);
+        }
+        
+        return map;
+    }, [occupiedDates]);
 
     function makeReservation() {
         if (hostId === undefined) {
             return;
         }
-
+        api.post("/reservation", {
+            client_id: user?.id,
+            host_id: +hostId,
+            start_date: range?.from,
+            end_date: range?.to,
+            status: "foo"
+        });
         // toast.promise(() => api.post("/reservation", {
         //     client_id: 7,
         //     host_id: +hostId,
@@ -36,6 +59,8 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
         // })
     }
 
+    console.log(range);
+
     if (!hostId) {
         return;
     }
@@ -43,33 +68,26 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
     return (
         <div className="flex flex-col justify-center items-center">
             <div className="space-y-4 my-2">
-                <DayPicker
-                    mode={"range"}
-                    disabled={disabledRange}
-                    selected={range}
-                    onSelect={(foo) => {
-                        if (foo === undefined) {
-                            return;
-                        }
-                        
-                        console.log(foo.to?.getDate());
-                        setRange(foo);
+                <RangeCalendar
+                    calendarWidth={250}
+                    onChange={(_range) => {
+                        setRange({
+                            from: new Date(_range.start.year, _range.start.month - 1, _range.start.day),
+                            to: new Date(_range.end.year, _range.end.month - 1, _range.end.day),
+                        });
                     }}
-                    modifiersStyles={{
-                        selected: {
-                            backgroundColor: 'transparant',
-                            color: '#f5f4f4',
-                        },
-                        range_middle: {
-                            color: '#1b1718',
-                        },
-                        today: {
-                            backgroundColor: '#8a0194',
-                            color: '#f5f4f4',
-                        },
+                    isDateUnavailable={(date) => {
+                        const tomorrow = new Date(date.year, date.month - 1, date.day + 1);
+
+                        if (tomorrow.getTime() < Date.now()) {
+                            return true;
+                        }
+
+                        const mapKey = `${date.year}-${date.month}-${date.day}`;
+
+                        return disabledDateMap.has(mapKey);
                     }}
                 />
-                <Button onPress={() => setRange(undefined)}>Limpar datas</Button>
 
                 <CheckInOut from={range?.from} to={range?.to} />
 

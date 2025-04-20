@@ -1,13 +1,19 @@
-import { NavLink } from "react-router";
 import { UserAvatar } from "./user-avatar";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
 
 export function MainNavBar() {
     return (
-        <nav className="bg-zinc-900 flex justify-between items-center px-10 py-1.5">
-            <NavLink to="/">
+        <Navbar
+            maxWidth={"xl"}
+        >
+             <NavbarBrand>
                 <img src="/navbar-accurate-logo.svg"/>
-            </NavLink>
-            <UserAvatar />
-        </nav>
+             </NavbarBrand>
+             <NavbarContent justify="end">
+                <NavbarItem>
+                    <UserAvatar />
+                </NavbarItem>
+             </NavbarContent>
+        </Navbar>
     )
 }

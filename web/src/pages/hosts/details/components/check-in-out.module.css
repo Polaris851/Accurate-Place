@@ -5,21 +5,22 @@
     user-select: none;
 }
 
-.container > .checkInButton {
+.container>.checkInButton {
     flex: 1;
 }
 
-.container > .checkInButton:nth-child(1) {
-    border-top-left-radius: 9px ;
-    border-bottom-left-radius: 9px ;
+.container>.checkInButton:nth-child(1) {
+    border-top-left-radius: 9px;
+    border-bottom-left-radius: 9px;
 }
 
-.container > .checkInButton:nth-child(2) {
-    border-top-right-radius: 9px ;
-    border-bottom-right-radius: 9px ;
+.container>.checkInButton:nth-child(2) {
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 9px;
 }
 
 .checkInButton {
+    text-align: center;
     padding: 1em;
     border: 1px solid white;
 }

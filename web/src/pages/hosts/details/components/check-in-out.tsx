@@ -10,8 +10,8 @@ export function CheckInOut(props: CheckInOutProps) {
 
     return (
         <div className={styles.container}>
-            <div className={styles.checkInButton}>{from?.toLocaleDateString("pt-BR") ?? "Selecione uma data"}</div>
-            <div className={styles.checkInButton}>{to?.toLocaleDateString("pt-BR") ?? "Selecione uma data"}</div>
+            <div className={styles.checkInButton}>{from?.toLocaleDateString("pt-BR") ?? "Check-in"}</div>
+            <div className={styles.checkInButton}>{to?.toLocaleDateString("pt-BR") ?? "Check-out"}</div>
         </div>
     )
 }
