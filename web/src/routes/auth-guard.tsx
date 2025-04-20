@@ -3,6 +3,7 @@ import { useMe } from "../auth/get-me";
 import { Spinner } from "@heroui/react";
 import { useEffect } from "react";
 import { useAuth } from "../auth/use-auth";
+import { MainNavBar } from "../components/navbar/main-navbar";
 
 export function AuthGuard() {
     const { isLoading, user } = useMe();
@@ -14,7 +15,7 @@ export function AuthGuard() {
     }, [user]);
 
     if (isLoading) {
-        return <Spinner/>
+        return <Spinner />
     }
 
     if (user === null) {
@@ -22,5 +23,10 @@ export function AuthGuard() {
         return <Navigate to={"/login"} />
     }
 
-    return <Outlet />
+    return (
+        <>
+            <MainNavBar />
+            <Outlet />
+        </>
+    );
 }

@@ -1,6 +1,5 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { MainNavBar } from "./components/navbar/main-navbar";
 import { api } from "./lib/axios";
 import { queryClient } from "./lib/query-client";
 import { RouteManager } from "./routes/routes";
@@ -24,7 +23,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <MainNavBar />
       <RouteManager />
     </QueryClientProvider>
   )
