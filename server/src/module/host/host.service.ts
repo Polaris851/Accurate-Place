@@ -69,7 +69,7 @@ export class HostService {
     if (!host) throw new NotFoundException('Locação não encontrada');
 
     await this.hostRepository.nativeDelete({ id });
-    return `A locação ${host.name} foi removido`;
+    return "A locação foi removida";
   }
 
   async getAvailableHosts(start_date: string, end_date: string) {

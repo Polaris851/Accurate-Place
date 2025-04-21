@@ -1,19 +1,20 @@
 import { useMemo } from "react";
-import { useLazy } from "../hooks/use-lazy";
 import { api } from "../lib/axios";
 import { User } from "./use-auth";
+import { useQuery } from "@tanstack/react-query";
 
 export function useMe() {
-    const info = useLazy({
-        fn: () => api.get<{ user: User }>("/me")
+    const queryInfo = useQuery({
+        queryKey: ["me"],
+        queryFn: () => api.get<{ user: User }>("/me")
     });
 
     const user = useMemo(() => {
-        return info.data?.data?.user ?? null;
-    }, [info.data]);
+        return queryInfo.data?.data?.user ?? null;
+    }, [queryInfo.data]);
 
     return {
-        ...info,
+        ...queryInfo,
         user
     };
 }

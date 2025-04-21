@@ -5,11 +5,11 @@ import { api } from "../../../../lib/axios";
 import { useParams } from "react-router";
 import { Host } from "../../api/get-hosts";
 import { addToast, RangeCalendar } from "@heroui/react";
-import { useAuth } from "../../../../auth/use-auth";
 import { useHost } from "../../api/get-host";
 import { ValueFromDateRange } from "./value-from-date-range";
 import { isDateRangeValid } from "../helpers/is-date-range-valid";
 import { getMessageFromError } from "../../../../utils/get-message-from-error";
+import { NotFound } from "../../../../components/not-found";
 
 interface Range {
     from: Date;
@@ -30,8 +30,6 @@ export function MakeReservation(props: MakeReservationProps) {
     const [range, setRange] = useState<Range | undefined>();
     const [isValid, setIsValid] = useState(true);
 
-    const { user } = useAuth();
-
     const disabledDateMap = useMemo(() => {
         const map = new Map<string, Date>();
 
@@ -50,7 +48,6 @@ export function MakeReservation(props: MakeReservationProps) {
             return;
         }
         api.post("/reservation", {
-            client_id: user?.id,
             host_id: +hostId,
             start_date: range?.from,
             end_date: range?.to
@@ -74,12 +71,8 @@ export function MakeReservation(props: MakeReservationProps) {
         });
     }
 
-    if (!hostId) {
-        return;
-    }
-
-    if (!host) {
-        return <div>Host não encontrado</div>
+    if (!hostId || !host) {
+        return <NotFound />
     }
 
     return (

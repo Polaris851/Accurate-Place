@@ -13,8 +13,8 @@ export class Migration20250406235828_create_table_reservations extends Migration
       table.string("status").notNullable();
       table.timestamp("created_at").defaultTo(this.getKnex().fn.now());
 
-      table.foreign("client_id").references("clients.id");
-      table.foreign("host_id").references("hosts.id");
+      table.foreign("client_id").references("clients.id").onDelete("CASCADE");
+      table.foreign("host_id").references("hosts.id").onDelete("CASCADE");
     });
   }
 

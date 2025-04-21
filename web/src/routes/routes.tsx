@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router";
 import { HostsPage } from "../pages/hosts/client-page/page";
 import { HostPage } from "../pages/hosts/details/page";
-import { Home } from "../pages/home/page";
 import { Login } from "../pages/login/page";
 import { AuthGuard } from "./auth-guard";
 import { GuestGuard } from "./guest-guard";
@@ -28,7 +27,6 @@ export function RouteManager() {
                 <Route path="/my-reservations" element={<MyReservations/>} />
 
                 <Route element={<AdminGuard />}>
-                    <Route path={"/admin"} element={<Home />} />
                     <Route path={"/admin/hosts"} element={<AdminHostsPage />} />
                     <Route path={"/admin/hosts/:hostId"} element={<AdminHostPage />} />
                     <Route path={"/admin/clients"} element={<AdminUsersPage />} />

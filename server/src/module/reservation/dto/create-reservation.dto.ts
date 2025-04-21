@@ -1,9 +1,6 @@
 import { IsNumber, IsNotEmpty, IsPositive, IsString } from "class-validator";
 
 export class CreateReservationDto {
-  @IsNotEmpty({ message: 'O cliente é obrigatório.' })
-  client_id: number;
-
   @IsNotEmpty({ message: 'A locação é obrigatório.' })
   host_id: number;
 
