@@ -41,7 +41,7 @@ export function UserPage() {
         }
     }, [user]);
 
-    if (!isLoading) {
+    if (isLoading) {
         return <Loading />
     }
 

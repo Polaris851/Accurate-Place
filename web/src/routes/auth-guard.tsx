@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router";
 import { useMe } from "../auth/get-me";
-import { Spinner } from "@heroui/react";
 import { useEffect } from "react";
 import { useAuth } from "../auth/use-auth";
 import { MainNavBar } from "../components/navbar/main-navbar";
+import { Loading } from "../components/skeleton-loading/loading";
 
 export function AuthGuard() {
     const { isLoading, user } = useMe();
@@ -15,7 +15,7 @@ export function AuthGuard() {
     }, [user]);
 
     if (isLoading) {
-        return <Spinner />
+        return <Loading />
     }
 
     if (user === null) {

@@ -17,9 +17,10 @@ export function MainNavBar() {
                 <>
                     <NavbarMenuToggle />
                     <NavbarMenu >
-                        <NavbarMenuItem >
+                        <NavbarMenuItem>
                             <Link
                                 href="/"
+                                className="w-full"
                                 color={pathname === "/" ? "primary" : "foreground"}
                                 size="lg"
                             >
@@ -27,6 +28,7 @@ export function MainNavBar() {
                             </Link>
                             <Link
                                 href="/admin/hosts"
+                                className="w-full"
                                 color={pathname === "/admin/hosts" ? "primary" : "foreground"}
                                 size="lg"
                             >
@@ -34,6 +36,7 @@ export function MainNavBar() {
                             </Link>
                             <Link
                                 href="/admin/clients"
+                                className="w-full"
                                 color={pathname === "/admin/clients" ? "primary" : "foreground"}
                                 size="lg"
                             >
