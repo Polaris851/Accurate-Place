@@ -8,6 +8,8 @@ import { User } from "../api/get-users";
 import { Button } from "../../../components/button";
 import { useAuth } from "../../../auth/use-auth";
 import { api } from "../../../lib/axios";
+import { Loading1 } from "../../../components/skeleton-loading/loading1";
+import { NotFound } from "../../../components/not-found";
 
 export function UserPage() {
     const params = useParams();
@@ -40,11 +42,11 @@ export function UserPage() {
     }, [user]);
 
     if (isLoading) {
-        return <div>loading</div>
+        return <Loading1/>
     }
 
     if (user === undefined) {
-        return <div>host não encontrado</div>
+        return <NotFound />
     }
 
     if (differentUser && !currentUser?.is_admin) {
