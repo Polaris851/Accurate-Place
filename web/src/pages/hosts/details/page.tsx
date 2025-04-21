@@ -7,7 +7,7 @@ import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
 export function HostPage() {
     const params = useParams();
 
-    const { host, isLoading } = useHost(Number(params?.hostId));
+    const { host, isLoading, refetch } = useHost(Number(params?.hostId));
 
     if (isLoading) {
         return <div>loading component</div>
@@ -37,7 +37,7 @@ export function HostPage() {
 
                 </div>
 
-                <MakeReservation occupiedDates={host.occupied_dates} />
+                <MakeReservation onSubmit={refetch} occupiedDates={host.occupied_dates} />
             </div>
         </div>
     )

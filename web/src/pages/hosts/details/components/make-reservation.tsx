@@ -4,11 +4,12 @@ import { Button } from "../../../../components/button";
 import { api } from "../../../../lib/axios";
 import { useParams } from "react-router";
 import { Host } from "../../api/get-hosts";
-import { RangeCalendar } from "@heroui/react";
+import { addToast, RangeCalendar } from "@heroui/react";
 import { useAuth } from "../../../../auth/use-auth";
 import { useHost } from "../../api/get-host";
 import { ValueFromDateRange } from "./value-from-date-range";
 import { isDateRangeValid } from "../helpers/is-date-range-valid";
+import { getMessageFromError } from "../../../../utils/get-message-from-error";
 
 interface Range {
     from: Date;
@@ -16,10 +17,13 @@ interface Range {
 }
 
 interface MakeReservationProps {
-    occupiedDates: Host["occupied_dates"]
+    occupiedDates: Host["occupied_dates"];
+    onSubmit: () => void;
 }
 
-export function MakeReservation({ occupiedDates }: MakeReservationProps) {
+export function MakeReservation(props: MakeReservationProps) {
+    const { occupiedDates, onSubmit } = props;
+
     const { hostId } = useParams();
     const { host } = useHost(hostId);
 
@@ -49,8 +53,24 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
             client_id: user?.id,
             host_id: +hostId,
             start_date: range?.from,
-            end_date: range?.to,
-            status: "foo"
+            end_date: range?.to
+        })
+        .then(() => {
+            onSubmit();
+            addToast({
+                title: "Reserva criada com sucesso",
+                color: "success"
+            })
+        })
+        .catch((error) => {
+            const message = error?.response?.data?.message;
+            
+            if (message) {
+                addToast({
+                    title: getMessageFromError(message),
+                    color: "danger"
+                })
+            }
         });
     }
 
