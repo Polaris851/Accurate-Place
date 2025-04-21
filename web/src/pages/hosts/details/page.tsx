@@ -3,6 +3,8 @@ import { useHost } from "../api/get-host";
 import { MakeReservation } from "./components/make-reservation";
 import { HostTypeFormatter } from "../components/host-type-formatter";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
+import { Loading } from "../../../components/skeleton-loading/loading";
+import { NotFound } from "../../../components/not-found";
 
 export function HostPage() {
     const params = useParams();
@@ -10,11 +12,11 @@ export function HostPage() {
     const { host, isLoading, refetch } = useHost(Number(params?.hostId));
 
     if (isLoading) {
-        return <div>loading component</div>
+        return <Loading />
     }
 
     if (host === undefined) {
-        return <div>host não encontrado</div>
+        return <NotFound />
     }
 
     return (

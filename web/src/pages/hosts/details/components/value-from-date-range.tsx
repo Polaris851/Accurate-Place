@@ -12,7 +12,6 @@ export function ValueFromDateRange(props: ValueFromDateRangeProps) {
 
     const totalDaysInMilliseconds = useMemo(() => {
         const deltaTime = (to?.getTime() ?? 0) - (from?.getTime() ?? 0);
-        console.log(deltaTime)
         return deltaTime;
     }, [from, to]);
 

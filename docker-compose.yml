@@ -1,3 +1,5 @@
+volumes:
+  db:
 networks:
   db:
     driver: bridge
@@ -14,6 +16,8 @@ services:
       - "3306:3306"
     networks:
       - db
+    volumes:
+      - db:/var/lib/mysql
   server:
     build: "./server"
     restart: "always"

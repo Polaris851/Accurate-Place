@@ -2,6 +2,7 @@ import { CardHost } from "./components/card-host";
 import { useHosts } from "../api/get-hosts";
 import { AvailableHostsByDate, Range } from "./components/available-hosts-by-date";
 import { useState } from "react";
+import { Loading } from "../../../components/skeleton-loading/loading";
 
 export function HostsPage() {
 
@@ -12,7 +13,7 @@ export function HostsPage() {
     });
 
     if (isLoading) {
-        return <div>loading...</div>
+        return <Loading />
     }
 
     return (

@@ -10,7 +10,9 @@ interface HostProps {
     hourly_price: number,
 }
 
-export function CardHost({ hostId, type, name, hourly_price }: HostProps) {
+export function CardHost(props: HostProps) {
+    const { hostId, type, name, hourly_price } = props;
+    
     return (
         <Link to={`/host/${hostId}`}>
             <Card isFooterBlurred className="w-full h-[250px] col-span-12 sm:col-span-5 hover:scale-95">

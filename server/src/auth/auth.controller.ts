@@ -81,8 +81,6 @@ export class AuthController {
             dto.password = await bcrypt.hash(dto.password, 10);
         }
 
-        console.log(dto);
-
         await this.clientRepository.nativeUpdate(user, dto);
     }
 

@@ -16,7 +16,6 @@ export function Register() {
         api.post("/register", data)
             .then((response) => {
                 const token = response.data.accessToken;
-                console.log(token)
                 if (!token) {
                     throw new Error();
                 }

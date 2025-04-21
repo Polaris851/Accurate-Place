@@ -9,10 +9,21 @@ import { ReservationStatus } from "./reservation-status";
 interface ReservationsTableProps {
     reservations: Reservation[];
     onCancel?: () => void;
+    isLoading?: boolean;
 }
 
+const columns = [
+    { key: "client", label: "Usuário" },
+    { key: "host", label: "Nome da Locação" },
+    { key: "start_date", label: "Check-in" },
+    { key: "end_date", label: "Check-out" },
+    { key: "total_price", label: "Preço total" },
+    { key: "status", label: "Status" },
+    { key: "actions", label: "Ações" }
+];
+
 export function ReservationsTable(props: ReservationsTableProps) {
-    const { reservations, onCancel } = props;
+    const { reservations, onCancel, isLoading } = props;
 
     const rows = useMemo(() => {
         return reservations.map((reservation) => ({
@@ -39,36 +50,8 @@ export function ReservationsTable(props: ReservationsTableProps) {
 
     return (
         <DataTable
-            columns={[
-                {
-                    key: "client",
-                    label: "Usuário"
-                },
-                {
-                    key: "host",
-                    label: "Nome da Locação"
-                },
-                {
-                    key: "start_date",
-                    label: "Check-in"
-                },
-                {
-                    key: "end_date",
-                    label: "Check-out"
-                },
-                {
-                    key: "total_price",
-                    label: "Preço total"
-                },
-                {
-                    key: "status",
-                    label: "Status"
-                },
-                {
-                    key: "actions",
-                    label: "Ações"
-                }
-            ]}
+            loading={isLoading}
+            columns={columns}
             rows={rows}
             searchBy={["clientName", "clientEmail", "start_date", "end_date", "total_price"]}
             emptyContentMessage={"Nenhum dado de reserva encontrado"}

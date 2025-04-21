@@ -19,7 +19,13 @@ export function MainNavBar() {
                     <NavbarMenu >
                         <NavbarMenuItem >
                             <Link
-                                className="w-full"
+                                href="/"
+                                color={pathname === "/" ? "primary" : "foreground"}
+                                size="lg"
+                            >
+                                Vizualizar Locações
+                            </Link>
+                            <Link
                                 href="/admin/hosts"
                                 color={pathname === "/admin/hosts" ? "primary" : "foreground"}
                                 size="lg"
@@ -27,7 +33,6 @@ export function MainNavBar() {
                                 Administrar Locações
                             </Link>
                             <Link
-                                className="w-full"
                                 href="/admin/clients"
                                 color={pathname === "/admin/clients" ? "primary" : "foreground"}
                                 size="lg"
@@ -40,7 +45,9 @@ export function MainNavBar() {
             )}
 
             <NavbarBrand>
-                <img className="size-8" src="/navbar-accurate-logo.svg" />
+                <Link href="/">
+                    <img className="size-8" src="/navbar-accurate-logo.svg" />
+                </Link>
             </NavbarBrand>
 
             <NavbarContent justify="end">

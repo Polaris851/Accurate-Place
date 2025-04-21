@@ -8,8 +8,8 @@ import { User } from "../api/get-users";
 import { Button } from "../../../components/button";
 import { useAuth } from "../../../auth/use-auth";
 import { api } from "../../../lib/axios";
-import { Loading1 } from "../../../components/skeleton-loading/loading1";
 import { NotFound } from "../../../components/not-found";
+import { Loading } from "../../../components/skeleton-loading/loading";
 
 export function UserPage() {
     const params = useParams();
@@ -41,8 +41,8 @@ export function UserPage() {
         }
     }, [user]);
 
-    if (isLoading) {
-        return <Loading1/>
+    if (!isLoading) {
+        return <Loading />
     }
 
     if (user === undefined) {
