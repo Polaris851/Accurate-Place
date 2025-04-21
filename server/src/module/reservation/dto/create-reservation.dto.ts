@@ -12,8 +12,4 @@ export class CreateReservationDto {
 
   @IsNotEmpty({ message: 'A data final é obrigatório.' })
   end_date: Date;
-
-  @IsNotEmpty({ message: 'A situação é obrigatório.' })
-  @IsString({ message: 'A situação deve ser uma string.' })
-  status: string;
 }

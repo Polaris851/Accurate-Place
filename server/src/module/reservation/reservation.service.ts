@@ -32,6 +32,7 @@ export class ReservationService {
     
     const conflict = await this.reservationRepository.findOne({
       host,
+      status: "active",
       start_date: { $lt: createReservationDto.end_date },
       end_date: { $gt: createReservationDto.start_date }
     });
@@ -42,6 +43,7 @@ export class ReservationService {
     
     const clientConflict = await this.reservationRepository.findOne({
       client,
+      status: "active",
       start_date: { $lt: createReservationDto.end_date },
       end_date: { $gt: createReservationDto.start_date }
     });
@@ -74,7 +76,8 @@ export class ReservationService {
 
     const reservation = this.reservationRepository.create({
       ...createReservationDto,
-      total_price: total, 
+      total_price: total,
+      status: "active"
     });
     
     await this.reservationRepository.insert(reservation);
@@ -138,6 +141,10 @@ export class ReservationService {
     }
     
     return await this.reservationRepository.nativeUpdate(reservation, updateReservationDto);
+  }
+
+  public async cancelReservation(reservation: Reservation) {
+    await this.reservationRepository.nativeUpdate({ id: reservation.id }, { status: "canceled" });
   }
 
   async remove(id: number) {

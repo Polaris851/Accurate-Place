@@ -35,6 +35,10 @@ export class HostService {
     const occupiedDates: Date[] = [];
 
     for (const reservation of reservations) {
+      if (reservation.status !== "active") {
+        continue;
+      }
+      
       const start = this.normalizeDate(new Date(reservation.start_date));
       const end = this.normalizeDate(new Date(reservation.end_date));
 
@@ -77,8 +81,9 @@ export class HostService {
     }
 
     const hostsBusy = await this.reservationRepository.find({
-      start_date: { $lt: end },
-      end_date: { $gt: start }
+      status: "active",
+      start_date: { $lte: end },
+      end_date: { $gte: start }
     })
 
     const hostsBusyIds = hostsBusy.map(h => h.host_id);

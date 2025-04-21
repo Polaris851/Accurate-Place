@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, Req, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, Req, Query, ForbiddenException } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { IsLogged } from 'src/auth/decorators/is-logged';
 import { Request } from 'src/auth/guards/auth.guard';
 import { IsAdmin } from 'src/auth/decorators/is-admin';
+import { CancelReservationDto } from './dto/cancel-reservation.dto';
 
 @Controller('reservation')
 @IsLogged()
@@ -38,6 +39,20 @@ export class ReservationController {
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return await this.reservationService.findOne(id);
+  }
+
+  @Put("/cancel")
+  public async cancelReservation(@Body() cancelReservationDto: CancelReservationDto, @Req() request: Request) {
+    const reservation = await this.reservationService.findOne(cancelReservationDto.reservationId);
+    const currentUser = request.user;
+
+    if (currentUser.id !== reservation.client_id && !currentUser.is_admin) {
+      throw new ForbiddenException("Você não tem permissão para cancelar essa reserva");
+    }
+
+    await this.reservationService.cancelReservation(reservation);
+
+    return { success: true };
   }
 
   @Put(':id')

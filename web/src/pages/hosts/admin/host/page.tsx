@@ -5,7 +5,7 @@ import { ReservationsTable } from "./components/reservations-table";
 export function AdminHostPage() {
     const { hostId } = useParams();
 
-    const { reservations, isLoading } = useReservations({ hostId: hostId });
+    const { reservations, isLoading, refetch } = useReservations({ hostId: hostId });
 
     console.log(reservations);
 
@@ -18,6 +18,7 @@ export function AdminHostPage() {
             <h1 className={"text-3xl text-zinc-100 font-semibold mb-4"}>Reservas da locação</h1>
             <ReservationsTable
                 reservations={reservations}
+                onCancel={refetch}
             />
         </div>
     )

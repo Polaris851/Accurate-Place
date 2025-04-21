@@ -29,8 +29,12 @@ export class Reservation {
   total_price: number;
 
   @Property()
-  status: string;
+  status: "active" | "canceled";
 
   @Property()
   createdAt?: Date = new Date();
+
+  public cancelReservation() {
+    this.status = "canceled";
+  }
 }

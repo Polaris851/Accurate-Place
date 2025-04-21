@@ -19,8 +19,4 @@ export class UpdateReservationDto extends PartialType(CreateReservationDto) {
   @IsNumber({}, { message: 'O valor final deve ser numérico.' })
   @IsPositive({ message: 'O valor final deve ser positivo.' })
   total_price?: number;
-
-  @IsOptional()
-  @IsString({ message: 'A situação deve ser uma string.' })
-  status?: string;
 }

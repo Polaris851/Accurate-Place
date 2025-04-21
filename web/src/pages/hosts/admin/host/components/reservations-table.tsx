@@ -4,13 +4,15 @@ import { Reservation } from "../../../../../types";
 import { User } from "@heroui/react";
 import { formatCurrency } from "../../../../../utils/format-currency";
 import { CancelReservationAction } from "./cancel-reservation-action";
+import { ReservationStatus } from "./reservation-status";
 
 interface ReservationsTableProps {
     reservations: Reservation[];
+    onCancel?: () => void;
 }
 
 export function ReservationsTable(props: ReservationsTableProps) {
-    const { reservations } = props;
+    const { reservations, onCancel } = props;
 
     const rows = useMemo(() => {
         return reservations.map((reservation) => ({
@@ -30,8 +32,8 @@ export function ReservationsTable(props: ReservationsTableProps) {
             start_date: new Date(reservation.start_date).toLocaleDateString("pt-BR"),
             end_date: new Date(reservation.end_date).toLocaleDateString("pt-BR"),
             total_price: formatCurrency(reservation.total_price),
-            status: reservation.status,
-            actions: <CancelReservationAction />
+            status: <ReservationStatus status={reservation.status}/>,
+            actions: <CancelReservationAction disabled={reservation.status === "canceled"} reservationId={reservation.id} onCancel={onCancel} />
         }))
     }, [reservations]);
 
