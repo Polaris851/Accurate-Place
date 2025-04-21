@@ -52,7 +52,23 @@ export class ReservationService {
 
     const startDate = new Date(createReservationDto.start_date);
     const endDate = new Date(createReservationDto.end_date);
+    
+    const today = new Date(Date.now());
+    today.setHours(0, 0, 0, 0);
+  
+    if (startDate.getTime() < today.getTime()) {
+      throw new BadRequestException("Não é possível criar uma reserva em uma data passada")
+    }
+
     const days = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (days > host.max_time) {
+      throw new BadRequestException(`Tempo de reserva maior do que o permitido de ${host.max_time} dias`);
+    }
+
+    if (days < host.min_time) {
+      throw new BadRequestException(`Tempo de reserva menor do que o mínimo de ${host.min_time} dias`);
+    }
 
     const total = host.hourly_price * 24 * days;
 

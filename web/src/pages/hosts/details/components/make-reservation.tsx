@@ -6,6 +6,9 @@ import { useParams } from "react-router";
 import { Host } from "../../api/get-hosts";
 import { RangeCalendar } from "@heroui/react";
 import { useAuth } from "../../../../auth/use-auth";
+import { useHost } from "../../api/get-host";
+import { ValueFromDateRange } from "./value-from-date-range";
+import { isDateRangeValid } from "../helpers/is-date-range-valid";
 
 interface Range {
     from: Date;
@@ -18,8 +21,11 @@ interface MakeReservationProps {
 
 export function MakeReservation({ occupiedDates }: MakeReservationProps) {
     const { hostId } = useParams();
+    const { host } = useHost(hostId);
 
     const [range, setRange] = useState<Range | undefined>();
+    const [isValid, setIsValid] = useState(true);
+
     const { user } = useAuth();
 
     const disabledDateMap = useMemo(() => {
@@ -48,10 +54,12 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
         });
     }
 
-    console.log(range);
-
     if (!hostId) {
         return;
+    }
+
+    if (!host) {
+        return <div>Host não encontrado</div>
     }
 
     return (
@@ -59,10 +67,19 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
             <div className="space-y-4 my-2">
                 <RangeCalendar
                     calendarWidth={250}
+                    isInvalid={!isValid}
+                    errorMessage={!isValid ? `Selecione entre ${host.min_time} dia(s) e ${host.max_time} dias` : ""}
                     onChange={(_range) => {
+                        const from = new Date(_range.start.year, _range.start.month - 1, _range.start.day);
+                        const to = new Date(_range.end.year, _range.end.month - 1, _range.end.day);
+
+                        const isRangeValid = isDateRangeValid(from, to, host?.min_time, host?.max_time);
+                        
+                        setIsValid(isRangeValid);
+
                         setRange({
-                            from: new Date(_range.start.year, _range.start.month - 1, _range.start.day),
-                            to: new Date(_range.end.year, _range.end.month - 1, _range.end.day),
+                            from,
+                            to,
                         });
                     }}
                     isDateUnavailable={(date) => {
@@ -79,8 +96,16 @@ export function MakeReservation({ occupiedDates }: MakeReservationProps) {
                 />
 
                 <CheckInOut from={range?.from} to={range?.to} />
-
-                <Button fullWidth onPress={makeReservation}>
+                <ValueFromDateRange
+                    hourlyPrice={host?.hourly_price ?? 0}
+                    from={range?.from}
+                    to={range?.to}
+                />
+                <Button
+                    fullWidth
+                    isDisabled={!isValid}
+                    onPress={makeReservation}
+                >
                     Reservar
                 </Button>
             </div>

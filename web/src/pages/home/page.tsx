@@ -23,7 +23,7 @@ const links = [
 const DashboardCard = ({ to, icon, label }: { to: string; icon: ReactNode; label: string }) => (
   <NavLink
     to={to}
-    className="rounded-2xl bg-zinc-800 p-6 flex flex-col items-center justify-center gap-3 overflow-hidden transition-all duration-200 hover:ring-2 hover:ring-fuchsia-950 hover:scale-[1.02]"
+    className="rounded-2xl bg-zinc-800 p-6 flex flex-col items-center justify-center gap-3 overflow-hidden transition-all duration-200 hover:ring-2 hover:ring-primary-200 hover:scale-[1.02]"
   >
     <p className="flex items-center gap-2 text-zinc-200 text-lg font-semibold">
       {icon}

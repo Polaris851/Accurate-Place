@@ -5,6 +5,7 @@ export function MainNavBar() {
     return (
         <Navbar
             maxWidth={"xl"}
+            isBordered
         >
              <NavbarBrand>
                 <img src="/navbar-accurate-logo.svg"/>

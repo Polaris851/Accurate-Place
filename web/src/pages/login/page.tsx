@@ -1,14 +1,15 @@
-import { CircleCheck } from "lucide-react";
+import { CircleCheck, EyeClosedIcon, EyeIcon } from "lucide-react";
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
 import { FieldValues, useForm } from "react-hook-form";
 import { addToast } from "@heroui/react";
 import { api } from "../../lib/axios";
 import { Link, useNavigate } from "react-router";
+import { useState } from "react";
 
 export function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const { handleSubmit, register } = useForm();
-
   const navigate = useNavigate();
 
   function login(data: FieldValues) {
@@ -42,7 +43,7 @@ export function Login() {
         <div className="flex flex-col gap-2">
           <h1 className="text-zinc-100 text-3xl font-semibold">Seja bem-vindo!</h1>
           <p className="text-zinc-400 text-sm">Não tem uma conta? {" "}
-            <Link to={"/register"} className="text-fuchsia-300 underline font-semibold">
+            <Link to={"/register"} className="text-primary-400 underline font-semibold">
               Clique aqui
             </Link></p>
         </div>
@@ -73,11 +74,23 @@ export function Login() {
             errorMessage={"Insira uma senha"}
             label={"Senha"}
             placeholder={"Insira a sua senha segura"}
-            type="password"
+            type={showPassword ? "text" : "password"}
+            endContent={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="focus:outline-none "
+              >
+                {showPassword ? (
+                  <EyeClosedIcon className="size-6 text-gray-500" />
+                ) : (
+                  <EyeIcon className="size-6 text-gray-500" />
+                )}
+              </button>}
           />
 
           <Button type="submit" fullWidth>
-            <CircleCheck className="size-5 text-fuchsia-300" />
+            <CircleCheck className="size-5 text-zinc-100" />
             Confirmar
           </Button>
         </form>

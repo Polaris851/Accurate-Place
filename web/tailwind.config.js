@@ -16,26 +16,26 @@ export default {
   plugins: [
     heroui({
       themes: {
-        "purple-dark": {
-          extend: "dark", // <- inherit default values from dark theme
+        "accurate-dark": {
+          extend: "dark",
           colors: {
-            background: "#09090b",
+            background: "#242427",
             foreground: "#ffffff",
             primary: {
-              50: "#3B096C",
-              100: "#520F83",
-              200: "#7318A2",
-              300: "#9823C2",
-              400: "#c031e2",
-              500: "#DD62ED",
-              600: "#F182F6",
-              700: "#FCADF9",
-              800: "#FDD5F9",
-              900: "#FEECFE",
-              DEFAULT: "#DD62ED",
+              50: "#240122",
+              100: "#3a0e36",
+              200: "#51164b",
+              300: "#681c5f",
+              400: "#802573",
+              500: "#993287",
+              600: "#b94aa1",
+              700: "#d973bb",
+              800: "#edabda",
+              900: "#f8d6ee",
+              DEFAULT: "#6a2161",
               foreground: "#ffffff",
             },
-            focus: "#F182F6",
+            focus: "#b94aa1",
           },
           layout: {
             disabledOpacity: "0.3",
