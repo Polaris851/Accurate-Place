@@ -19,7 +19,7 @@ export default {
         "accurate-dark": {
           extend: "dark",
           colors: {
-            background: "#242427",
+            background: "#09090b",
             foreground: "#ffffff",
             primary: {
               50: "#240122",

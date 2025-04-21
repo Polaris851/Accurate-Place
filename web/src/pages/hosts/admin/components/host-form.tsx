@@ -97,6 +97,7 @@ export function HostForm(props: HostFormProps) {
                                     <Input
                                         {...register("min_time", { required: true, valueAsNumber: true })}
                                         placeholder="Tempo Minimo"
+                                        min={1}
                                         endContent={"Dia(s)"}
                                         type="number"
                                     />
@@ -104,6 +105,7 @@ export function HostForm(props: HostFormProps) {
                                         {...register("max_time", { required: true, valueAsNumber: true })}
                                         endContent={"Dia(s)"}
                                         placeholder="Tempo Máximo"
+                                        min={1}
                                         type="number"
                                     />
                                 </div>

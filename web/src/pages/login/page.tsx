@@ -73,6 +73,7 @@ export function Login() {
             isRequired
             errorMessage={"Insira uma senha"}
             label={"Senha"}
+            minLength={8}
             placeholder={"Insira a sua senha segura"}
             type={showPassword ? "text" : "password"}
             endContent={

@@ -79,6 +79,7 @@ export function Register() {
                                 }
                             })}
                             isRequired
+                            maxLength={11}
                             errorMessage={"Insira um telefone"}
                             label={"Telefone"}
                             placeholder={"Insira o seu telefone"}
@@ -108,6 +109,7 @@ export function Register() {
                         isRequired
                         errorMessage={"Insira uma senha"}
                         label={"Senha"}
+                        minLength={8}
                         placeholder={"Insira a sua senha"}
                         type={showPassword ? "text" : "password"}
                         endContent={

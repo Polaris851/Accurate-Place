@@ -25,7 +25,7 @@ export class ClientController {
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number, @Req() request: Request) {
     if (id !== request.user.id && !request.user.is_admin) {
-      throw new ForbiddenException("Você não tem permissão aqui meu querido");
+      throw new ForbiddenException("Você não tem permissão");
     }
 
     return await this.clientService.findOne(id);
