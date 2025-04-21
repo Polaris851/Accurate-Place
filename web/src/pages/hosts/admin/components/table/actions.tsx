@@ -7,6 +7,7 @@ import { HostForm } from "../host-form";
 import { Host, useHosts } from "../../../api/get-hosts";
 import { DeleteConfirm } from "../../../../../components/delete-confirm";
 import { api } from "../../../../../lib/axios";
+import { getMessageFromError } from "../../../../../utils/get-message-from-error";
 
 interface ActionsProps {
     host: Host;
@@ -24,10 +25,22 @@ export function HostActions(props: ActionsProps) {
     function handleDeleteHost() {
         const deletePromise = api.delete(`/host/${host.id}`).then(() => {
             refetch();
+            addToast({
+                title: "Locação deletada!",
+                color: "success"
+            });
+        }).catch((error) => {
+            const message = error?.response?.data?.message;
+                        
+            if (message) {
+                addToast({
+                    title: getMessageFromError(message),
+                    color: "danger"
+                });
+            }
         });
         addToast({
             title: "Excluindo locação",
-            color: "success",
             promise: deletePromise
         });
 

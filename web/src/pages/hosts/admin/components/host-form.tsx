@@ -6,6 +6,7 @@ import { Button } from "../../../../components/button";
 import { Host, useHosts } from "../../api/get-hosts";
 import { api } from "../../../../lib/axios";
 import { useMemo } from "react";
+import { getMessageFromError } from "../../../../utils/get-message-from-error";
 
 interface HostFormProps {
     isOpen: boolean;
@@ -16,7 +17,7 @@ interface HostFormProps {
 export function HostForm(props: HostFormProps) {
     const { isOpen, onClose, defaultValues } = props;
 
-    const { register, handleSubmit, reset } = useForm<Host>({
+    const { register, handleSubmit, reset, setError, formState: { errors } } = useForm<Host>({
         defaultValues: defaultValues
     });
 
@@ -25,14 +26,37 @@ export function HostForm(props: HostFormProps) {
     const { refetch } = useHosts();
 
     function onSubmit(data: FieldValues) {
+        if (!data.type) {
+            setError("type", { type: "required", message: "Insira um tipo" });
+            return;
+        }
+
+        if (data.min_time > data.max_time) {
+            setError("min_time", { type: "timeOutOfBounds", message: "O tempo mínimo precisa ser menor do que o tempo máximo o.O" });
+            return;
+        }
+
+        data.hourly_price = +data.hourly_price;
         if (isEditing) {
             const editPromise = api.put(`/host/${data.id}`, data).then(() => {
                 refetch();
                 onClose();
+                addToast({
+                    title: "Locação salva!",
+                    color: "success"
+                });
+            }).catch((error) => {
+                const message = error?.response?.data?.message;
+
+                if (message) {
+                    addToast({
+                        title: getMessageFromError(message),
+                        color: "danger"
+                    });
+                }
             });
             addToast({
                 title: "Editando locação",
-                color: "success",
                 promise: editPromise
             });
             return;
@@ -41,10 +65,23 @@ export function HostForm(props: HostFormProps) {
         const addPromise = api.post("/host", data).then(() => {
             refetch();
             onClose();
+            reset();
+            addToast({
+                title: "Locação criada!",
+                color: "success"
+            });
+        }).catch((error) => {
+            const message = error?.response?.data?.message;
+
+            if (message) {
+                addToast({
+                    title: getMessageFromError(message),
+                    color: "danger"
+                });
+            }
         });
         addToast({
             title: "Adicionando locação",
-            color: "success",
             promise: addPromise
         });
     }
@@ -64,13 +101,17 @@ export function HostForm(props: HostFormProps) {
                         <ModalBody>
                             <Form onSubmit={handleSubmit(onSubmit)}>
                                 <Input
-                                    {...register("name", { required: true })}
+                                    {...register("name", { required: { message: "Insira um nome", value: true } })}
+                                    errorMessage={errors?.name?.message}
+                                    isInvalid={"name" in errors}
                                     placeholder="Nome da Locação"
                                     type="text"
                                 />
 
                                 <Select
-                                    {...register("type", { required: true })}
+                                    {...register("type")}
+                                    errorMessage={errors?.type?.message}
+                                    isInvalid={"type" in errors}
                                     placeholder={"Tipo de locação"}
                                     size={"lg"}
                                 >
@@ -82,12 +123,24 @@ export function HostForm(props: HostFormProps) {
                                 </Select>
 
                                 <Textarea
-                                    {...register("description", { required: true })}
+                                    {...register("description", { required: false })}
                                     placeholder="Descrição da Locação"
                                 />
 
                                 <Input
-                                    {...register("hourly_price", { required: true, valueAsNumber: true })}
+                                    {...register("hourly_price", {
+                                        required: {
+                                            message: "Insira um preço",
+                                            value: true
+                                        },
+                                        min: {
+                                            message: "Um valor negativo é inválido",
+                                            value: 0
+                                        }
+                                    })}
+                                    min={0}
+                                    errorMessage={errors?.hourly_price?.message}
+                                    isInvalid={"hourly_price" in errors}
                                     startContent={"R$"}
                                     placeholder="Valor por hora"
                                     type="number"
@@ -95,14 +148,18 @@ export function HostForm(props: HostFormProps) {
 
                                 <div className={"flex flex-row gap-3"}>
                                     <Input
-                                        {...register("min_time", { required: true, valueAsNumber: true })}
+                                        {...register("min_time", { required: { message: "Insira um tempo mínimo", value: true }, valueAsNumber: true })}
+                                        errorMessage={errors?.min_time?.message}
+                                        isInvalid={"min_time" in errors}
                                         placeholder="Tempo Minimo"
                                         min={1}
                                         endContent={"Dia(s)"}
                                         type="number"
                                     />
                                     <Input
-                                        {...register("max_time", { required: true, valueAsNumber: true })}
+                                        {...register("max_time", { required: { message: "Insira um tempo máximo", value: true }, valueAsNumber: true })}
+                                        errorMessage={errors?.max_time?.message}
+                                        isInvalid={"max_time" in errors}
                                         endContent={"Dia(s)"}
                                         placeholder="Tempo Máximo"
                                         min={1}
