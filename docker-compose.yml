@@ -1,0 +1,43 @@
+networks:
+  db:
+    driver: bridge
+  api:
+    driver: bridge
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: desafio_tecnico
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - db
+  server:
+    build: "./server"
+    restart: "always"
+    environment:
+      ACCESS_TOKEN_SECRET: secret
+      DB_NAME: desafio_tecnico
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - db
+      - api
+  web:
+    build: "./web"
+    restart: "always"
+    depends_on:
+      - server
+    ports:
+      - "4173:4173"
+      - "5173:5173"
+    networks:
+      - api

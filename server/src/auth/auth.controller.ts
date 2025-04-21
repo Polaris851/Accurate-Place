@@ -3,7 +3,7 @@ import { InjectRepository } from "@mikro-orm/nestjs";
 import { BadRequestException, Body, ConflictException, Controller, ForbiddenException, Get, Post, Put, Req, UseGuards } from "@nestjs/common";
 import { Client } from "src/module/client/entities/client.entity";
 import { RegisterDto } from "./dto/register.dto";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { LoginDto } from "./dto/login.dto";
 
 import { AccessTokenPayload } from "./types";
@@ -18,7 +18,7 @@ export class AuthController {
         @InjectRepository(Client)
         private readonly clientRepository: EntityRepository<Client>,
         private readonly authService: AuthService,
-    ) {}
+    ) { }
 
     @Post("/login")
     public async login(@Body() dto: LoginDto) {
@@ -48,7 +48,7 @@ export class AuthController {
             password,
             is_admin: false
         });
-        
+
         const response = await this.clientRepository.insert(client);
 
         if (!response) {
@@ -80,9 +80,9 @@ export class AuthController {
         if (dto.password) {
             dto.password = await bcrypt.hash(dto.password, 10);
         }
-        
+
         console.log(dto);
- 
+
         await this.clientRepository.nativeUpdate(user, dto);
     }
 

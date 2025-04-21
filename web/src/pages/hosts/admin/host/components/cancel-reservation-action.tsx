@@ -1,7 +1,7 @@
 import { Ban } from "lucide-react";
 import { Button } from "../../../../../components/button";
 import { api } from "../../../../../lib/axios";
-import { addToast, Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
+import { addToast } from "@heroui/react";
 import { DeleteConfirm } from "../../../../../components/delete-confirm";
 import { useState } from "react";
 
@@ -73,18 +73,6 @@ export function CancelReservationAction(props: CancelReservationActionProps) {
                 onConfirm={cancelReservation}
                 confirmText={"Confirmar"}
             />
-            <Modal>
-                <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader>Cancelar reserva</ModalHeader>
-                            <ModalBody>
-                                <p>Tem certeza que deseja cancelar a reserva?</p>
-                            </ModalBody>
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
         </>
     )
 }

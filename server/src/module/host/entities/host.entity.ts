@@ -12,7 +12,7 @@ export class Host {
   @Property()
   type: string;
 
-  @Property({ type: 'text' })
+  @Property({ type: 'text', nullable: true })
   description?: string;
 
   @Property({ type: 'decimal' })

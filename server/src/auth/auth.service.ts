@@ -1,4 +1,4 @@
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { Client } from "src/module/client/entities/client.entity";
 import { LoginDto } from "./dto/login.dto";
 import { ForbiddenException, Injectable } from "@nestjs/common";
