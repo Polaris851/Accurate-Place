@@ -5,22 +5,30 @@
 </p>
 
 <p align="center">
-  <a href="#sobre">Objetivo e Regras</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#sobre">Sobre</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#diferenciais">Diferenciais</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; !
+  <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
   <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
-## 🦥 Objetivo e Regras
+## 🦥 Sobre
 
 O sistema deve permitir que os clientes realizem reservas e consultem locações disponíveis para datas selecionadas.
 
-### Regras
+### 📋 Regras de Acesso e Permissões
 
-- Apenas administradores podem criar, editar e excluir locações.
-- Apenas administradores podem excluir clientes.
-- Apenas administradores ou o responsável pela reserva podem visualizar ou cancelar uma reserva.
-- Apenas o próprio usuário (responsável pelo perfil) pode editar seu perfil.
+- 🔒 **Administradores** têm acesso a funcionalidades administrativas, podendo:
+  - Criar, editar e excluir locações.
+  - Excluir clientes.
+  - Visualizar o perfil de qualquer cliente.
+  - Visualizar todas as reservas vinculadas a uma locação.
+
+- 👥 **Administradores e responsáveis pela reserva** podem:
+  - Visualizar os detalhes de uma reserva.
+  - Cancelar a própria reserva.
+
+- 🧑 **Usuários autenticados** podem:
+  - Editar apenas o próprio perfil.
 
 ## 🖊️ Diferenciais
 
@@ -38,26 +46,32 @@ git clone https://github.com/Polaris851/Accurate-Place.git
 # 2. Acesse a pasta do projeto
 cd Accurate-Place
 
-# 3. Instale as dependências
-npm ci
+# 3. Configure as variáveis de ambiente
+cp ./server/.env.example ./server/.env
 
-# 4. Configure as variáveis de ambiente
-cp .env.example .env
-
-# 5. Suba os containers
+# 4. Suba os containers
 docker compose up -d
 
-# 6. Execute as migrations do banco de dados
+# 5. Execute as migrations do banco de dados
 docker compose exec server npm run migrate
 
-# 7. Popule o banco com o usuário administrador
-docker compose exec server npm run seeder:admin
+# 6. Popule o banco com o usuário administrador
+do6cker compose exec server npm run seeder:admin
 
-# (Opcional) 8. Adicione locações iniciais
+# (Opcional) 7. Adicione locações iniciais
 docker compose exec server npm run seeder:hosts
 ```
 
 Acesse a aplicação em: http://localhost:4173 ou http://127.0.0.1:4173
+
+### 👤 Acesso à Conta Administradora
+Você pode fazer login utilizando as credenciais abaixo:
+
+- **Email:** `admin@accurate.com`  
+- **Senha:** `accurate123`
+  
+> ⚠️ **Importante:** apenas essa conta possui permissões administrativas.  
+> Todas as contas cadastradas via interface serão do tipo **usuário (cliente)**.
 
 ## 💡 Tecnologias utilizadas
 
