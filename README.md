@@ -5,22 +5,27 @@
 </p>
 
 <p align="center">
-  <a href="#sobre">Objetivo e Regras</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#sobre">Sobre</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#diferenciais">Diferenciais</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; !
+  <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
   <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
-## 🦥 Objetivo e Regras
+## 🦥 Sobre
 
 O sistema deve permitir que os clientes realizem reservas e consultem locações disponíveis para datas selecionadas.
 
-### Regras
+### 📋 Regras de Acesso e Permissões
 
-- Apenas administradores podem criar, editar e excluir locações.
-- Apenas administradores podem excluir clientes.
-- Apenas administradores ou o responsável pela reserva podem visualizar ou cancelar uma reserva.
-- Apenas o próprio usuário (responsável pelo perfil) pode editar seu perfil.
+- 🔒 **Apenas administradores** podem:
+  - Criar, editar e excluir locações.
+  - Excluir clientes.
+
+- 👤 **Apenas administradores ou o responsável pela reserva** podem:
+  - Visualizar ou cancelar uma reserva.
+
+- 🛠️ **Apenas o próprio usuário** pode:
+  - Editar seu perfil.
 
 ## 🖊️ Diferenciais
 
@@ -58,6 +63,15 @@ docker compose exec server npm run seeder:hosts
 ```
 
 Acesse a aplicação em: http://localhost:4173 ou http://127.0.0.1:4173
+
+### 👤 Acesso à Conta Administradora
+Você pode fazer login utilizando as credenciais abaixo:
+
+- **Email:** `admin@accurate.com`  
+- **Senha:** `accurate123`
+  
+> ⚠️ **Importante:** apenas essa conta possui permissões administrativas.  
+> Todas as contas cadastradas via interface serão do tipo **usuário (cliente)**.
 
 ## 💡 Tecnologias utilizadas
 
