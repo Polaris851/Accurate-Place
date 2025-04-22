@@ -33,6 +33,7 @@ O sistema deve permitir que os clientes realizem reservas e consultem locações
 ## 🖊️ Diferenciais
 
 - Autenticação JWT.
+- Utilização do Docker.
 - [📥 Coleção do Postman](/Place-Accurate.postman_collection.json) — Importe no Postman para testar os endpoints.
 - Layout amigável e responsivo.
 
