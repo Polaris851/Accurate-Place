@@ -1,6 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateClientDto } from './dto/create-client.dto';
-import { UpdateClientDto } from './dto/update-client.dto';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Client } from './entities/client.entity';
 import { EntityRepository } from '@mikro-orm/mysql';
@@ -8,12 +6,6 @@ import { EntityRepository } from '@mikro-orm/mysql';
 @Injectable()
 export class ClientService {
   constructor(@InjectRepository(Client) private readonly clientRepository: EntityRepository<Client>) {}
-
-  async create(createClientDto: CreateClientDto) {
-    const client = this.clientRepository.create({ ...createClientDto, password: "" });
-    await this.clientRepository.insert(client);
-    return client;
-  }
 
   async findAll() {
     return await this.clientRepository.findAll();
@@ -23,13 +15,6 @@ export class ClientService {
     const client = await this.clientRepository.findOne({ id });
     if(!client)  throw new NotFoundException('Cliente não encontrado');
     return client;
-  }
-
-  async update(id: number, updateClientDto: UpdateClientDto) {
-    const client = await this.clientRepository.findOne({ id });
-    if(!client)  throw new NotFoundException('Cliente não encontrado');
-
-    return await this.clientRepository.nativeUpdate(client, updateClientDto);
   }
 
   async remove(id: number) {

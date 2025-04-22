@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, Req, ForbiddenException } from '@nestjs/common';
 import { ClientService } from './client.service';
-import { CreateClientDto } from './dto/create-client.dto';
 import { IsLogged } from 'src/auth/decorators/is-logged';
 import { IsAdmin } from 'src/auth/decorators/is-admin';
 import { Request } from 'src/auth/guards/auth.guard';
@@ -9,13 +8,7 @@ import { Request } from 'src/auth/guards/auth.guard';
 @IsLogged()
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
-
-  @Post()
-  @IsAdmin()
-  async create(@Body() createClientDto: CreateClientDto) {
-    return await this.clientService.create(createClientDto);
-  }
-
+  
   @Get()
   @IsAdmin()
   async findAll() {

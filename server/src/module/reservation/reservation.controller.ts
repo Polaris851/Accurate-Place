@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, Req, Query, ForbiddenException } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
-import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { IsLogged } from 'src/auth/decorators/is-logged';
 import { Request } from 'src/auth/guards/auth.guard';
 import { IsAdmin } from 'src/auth/decorators/is-admin';
@@ -53,11 +52,6 @@ export class ReservationController {
     await this.reservationService.cancelReservation(reservation);
 
     return { success: true };
-  }
-
-  @Put(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateReservationDto: UpdateReservationDto) {
-    return await this.reservationService.update(id, updateReservationDto);
   }
 
   @Delete(':id')

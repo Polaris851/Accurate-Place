@@ -1,6 +1,5 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException, Req } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
-import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Reservation } from './entities/reservation.entity';
 import { EntityRepository } from '@mikro-orm/mysql';
@@ -118,30 +117,6 @@ export class ReservationService {
 
     if (!reservation) throw new NotFoundException('Nenhuma reserva foi encontrada');
     return reservation;
-  }
-
-  async update(id: number, updateReservationDto: UpdateReservationDto) {
-    const reservation = await this.reservationRepository.findOne({ id });
-    if (!reservation) throw new NotFoundException('Nenhuma reserva foi encontrada');
-
-    if (updateReservationDto.start_date || updateReservationDto.end_date || updateReservationDto.host_id) {
-      const updatedStart = new Date(updateReservationDto.start_date ?? reservation.start_date);
-      const updatedEnd = new Date(updateReservationDto.end_date ?? reservation.end_date);
-      const updatedHostId = updateReservationDto.host_id ?? reservation.host_id;
-
-      const conflict = await this.reservationRepository.findOne({
-        id: { $ne: reservation.id },
-        host: updatedHostId,
-        start_date: { $lt: updatedEnd },
-        end_date: { $gt: updatedStart }
-      });
-
-      if (conflict) {
-        throw new ConflictException('Conflito de reserva com outro período');
-      }
-    }
-
-    return await this.reservationRepository.nativeUpdate(reservation, updateReservationDto);
   }
 
   public async cancelReservation(reservation: Reservation) {

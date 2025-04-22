@@ -41,7 +41,7 @@ export function Register() {
                 </div>
 
                 <form
-                    className="w-[540px] py-5 px-6 space-y-3"
+                    className="md:w-[540px] md:py-5 py-2 md:px-6 px-3 space-y-3"
                     onSubmit={handleSubmit(registerUser)}
                 >
                     <Input
@@ -78,7 +78,6 @@ export function Register() {
                                 }
                             })}
                             isRequired
-                            maxLength={11}
                             errorMessage={"Insira um telefone"}
                             label={"Telefone"}
                             placeholder={"Insira o seu telefone"}
