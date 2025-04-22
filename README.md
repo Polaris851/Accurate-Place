@@ -33,7 +33,7 @@ O sistema deve permitir que os clientes realizem reservas e consultem locações
 ## 🖊️ Diferenciais
 
 - Autenticação JWT.
-- Coleção do Postman.
+- [📥 Coleção do Postman](/Place-Accurate.postman_collection.json) — Importe no Postman para testar os endpoints.
 - Layout amigável e responsivo.
 
 ## 📝 Como Executar
@@ -56,7 +56,7 @@ docker compose up -d
 docker compose exec server npm run migrate
 
 # 6. Popule o banco com o usuário administrador
-do6cker compose exec server npm run seeder:admin
+docker compose exec server npm run seeder:admin
 
 # (Opcional) 7. Adicione locações iniciais
 docker compose exec server npm run seeder:hosts
