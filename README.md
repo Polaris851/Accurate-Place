@@ -17,15 +17,18 @@ O sistema deve permitir que os clientes realizem reservas e consultem locações
 
 ### 📋 Regras de Acesso e Permissões
 
-- 🔒 **Apenas administradores** podem:
+- 🔒 **Administradores** têm acesso a funcionalidades administrativas, podendo:
   - Criar, editar e excluir locações.
   - Excluir clientes.
+  - Visualizar o perfil de qualquer cliente.
+  - Visualizar todas as reservas vinculadas a uma locação.
 
-- 👤 **Apenas administradores ou o responsável pela reserva** podem:
-  - Visualizar ou cancelar uma reserva.
+- 👥 **Administradores e responsáveis pela reserva** podem:
+  - Visualizar os detalhes de uma reserva.
+  - Cancelar a própria reserva.
 
-- 🛠️ **Apenas o próprio usuário** pode:
-  - Editar seu perfil.
+- 🧑 **Usuários autenticados** podem:
+  - Editar apenas o próprio perfil.
 
 ## 🖊️ Diferenciais
 
@@ -43,22 +46,19 @@ git clone https://github.com/Polaris851/Accurate-Place.git
 # 2. Acesse a pasta do projeto
 cd Accurate-Place
 
-# 3. Instale as dependências
-npm ci
+# 3. Configure as variáveis de ambiente
+cp ./server/.env.example ./server/.env
 
-# 4. Configure as variáveis de ambiente
-cp .env.example .env
-
-# 5. Suba os containers
+# 4. Suba os containers
 docker compose up -d
 
-# 6. Execute as migrations do banco de dados
+# 5. Execute as migrations do banco de dados
 docker compose exec server npm run migrate
 
-# 7. Popule o banco com o usuário administrador
-docker compose exec server npm run seeder:admin
+# 6. Popule o banco com o usuário administrador
+do6cker compose exec server npm run seeder:admin
 
-# (Opcional) 8. Adicione locações iniciais
+# (Opcional) 7. Adicione locações iniciais
 docker compose exec server npm run seeder:hosts
 ```
 
